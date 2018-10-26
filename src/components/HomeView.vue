@@ -8,7 +8,9 @@
         </qrcode-reader>
         <div v-show="decodeString !== ''">
           {{decodeString}}
+          <input type="hidden" id="testing-code" :value="decodeString">
         </div>
+        <button v-show="decodeString !== '' " v-on:click="copyTestingCode">Copy text</button>
       </div>
     </div>
   </div>
@@ -24,10 +26,24 @@
         decodeString: ''
       }
     },
-    components: { QrcodeReader },
+    components: {QrcodeReader},
     methods: {
       onDecode (decodedString) {
         this.decodeString = decodedString
+      },
+      copyTestingCode () {
+        let testingCodeToCopy = document.querySelector('#testing-code')
+        testingCodeToCopy.setAttribute('type', 'text')
+        testingCodeToCopy.select()
+
+        try {
+          var successful = document.execCommand('copy')
+          var msg = successful ? 'successful' : 'unsuccessful'
+          alert('Testing code was copied ' + msg)
+        } catch (err) {
+          alert('Oops, unable to copy')
+        }
+        testingCodeToCopy.setAttribute('type', 'hidden')
       }
     }
   }
