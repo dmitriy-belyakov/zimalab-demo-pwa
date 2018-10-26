@@ -14,8 +14,7 @@
     </div>
     <main class="mdl-layout__content">
       <div class="page-content">
-        <qrcode-reader></qrcode-reader>
-        <!--<router-view></router-view>-->
+        <router-view></router-view>
       </div>
     </main>
   </div>
@@ -33,8 +32,7 @@
         document.getElementsByClassName('mdl-layout__drawer')[0].classList.remove('is-visible')
         document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.remove('is-visible')
       }
-    },
-    components: { QrcodeReader }
+    }
   }
 </script>
 
