@@ -11,6 +11,7 @@
           <input type="hidden" id="testing-code" :value="decodeString">
         </div>
         <button v-show="decodeString !== '' " v-on:click="copyTestingCode">Copy text</button>
+        <a v-show="decodeString !== '' " v-bind:href="decodeString">Open site</a>
       </div>
     </div>
   </div>
