@@ -5,7 +5,8 @@
         navigator.getlocation.getCurrentPosition()
       </div>
       <div class="card-body">
-        <a href="#" class="btn btn-primary">Find me</a>
+        <button v-on:click="getlocationByHTLM" class="btn btn-primary">Find me</button>
+        <p v-show="getLocation.htmlLocation !== ''" class="card-text">{{getLocation.htmlLocation}}</p>
       </div>
       <div class="card-footer text-muted">
         HTML5 geolocation by browser
@@ -16,7 +17,7 @@
         ymaps.geolocation()
       </div>
       <div class="card-body">
-        <a href="#" class="btn btn-primary">Find me</a>
+        <button class="btn btn-primary">Find me</button>
       </div>
       <div class="card-footer text-muted">
         Geolocation by Yandex.Maps JavaScript API
@@ -27,7 +28,7 @@
         AJAX query
       </div>
       <div class="card-body">
-        <a href="#" class="btn btn-primary">Find me</a>
+        <button class="btn btn-primary">Find me</button>
       </div>
       <div class="card-footer text-muted">
         AJAX query to Google Geolocation API by client
@@ -39,7 +40,7 @@
         cURL()
       </div>
       <div class="card-body">
-        <a href="#" class="btn btn-primary">Find me</a>
+        <button class="btn btn-primary">Find me</button>
       </div>
       <div class="card-footer text-muted">
         AJAX query to Google Geolocation API by client
@@ -51,22 +52,24 @@
 
 <script>
   export default {
-    data () {
+    data: function () {
       return {
-        myToggle: false,
-        buttons: [
-          { variant: 'primary', caption: 'Toggle 1', state: true },
-          { variant: 'danger', caption: 'Toggle 2', state: false },
-          { variant: 'warning', caption: 'Toggle 3', state: true },
-          { variant: 'success', caption: 'No Toggle', state: null },
-          { variant: 'outline-success', caption: 'Toggle 5', state: false },
-          { variant: 'outline-primary', caption: 'Toggle 6', state: false }
-        ]
+        getLocation: {
+          htmlLocation: ''
+        }
       }
     },
-    computed: {
-      btnStates () {
-        return this.buttons.map(btn => btn.state)
+    methods: {
+      getlocationByHTLM () {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(this.showPosition)
+        } else {
+          this.getLocation.htmlLocation = 'Geolocation is not supported by this browser.'
+        }
+      },
+      showPosition (position) {
+        this.getLocation.htmlLocation = 'Latitude: ' + position.coords.latitude.toString()
+        this.getLocation.htmlLocation += ' Longitude: ' + position.coords.longitude.toString()
       }
     }
   }
