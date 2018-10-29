@@ -3,8 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import vueSignature from 'vue-signature'
 
 Vue.config.productionTip = false
+Vue.use(vueSignature)
 
 /* eslint-disable no-new */
 new Vue({
