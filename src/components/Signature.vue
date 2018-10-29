@@ -1,5 +1,7 @@
 <template>
-    $END$
+  <div>
+    Hello Signature
+  </div>
 </template>
 
 <script>
