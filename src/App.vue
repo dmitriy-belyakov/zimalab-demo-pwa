@@ -10,6 +10,7 @@
       <span class="mdl-layout-title">Qr Code</span>
       <nav class="mdl-navigation">
         <router-link class="mdl-navigation__link" to="/" @click.native="hideMenu">Qr Code</router-link>
+        <router-link class="mdl-navigation__link" to="/signature" @click.native="hideMenu">Signature</router-link>
       </nav>
     </div>
     <main class="mdl-layout__content">
