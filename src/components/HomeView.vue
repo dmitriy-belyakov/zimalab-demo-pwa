@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <template>
   <div>
     <div class="mdl-grid">
@@ -10,8 +11,8 @@
           {{decodeString}}
           <input type="hidden" id="testing-code" :value="decodeString">
         </div>
-        <button v-show="decodeString !== '' " v-on:click="copyTestingCode">Copy text</button>
-        <a v-show="decodeString !== '' " v-bind:href="decodeString">Open site</a>
+        <button v-show="!isUrlAbsolute(decodeString) && decodeString != ''" v-on:click="copyTestingCode">Copy text</button>
+        <a v-show="isUrlAbsolute(decodeString)" v-bind:href="decodeString">Open site</a>
       </div>
     </div>
   </div>
@@ -40,11 +41,13 @@
         try {
           var successful = document.execCommand('copy')
           var msg = successful ? 'successful' : 'unsuccessful'
-          alert('Testing code was copied ' + msg)
         } catch (err) {
           alert('Oops, unable to copy')
         }
         testingCodeToCopy.setAttribute('type', 'hidden')
+      },
+      isUrlAbsolute (url) {
+        return (url.indexOf('://') > 0 || url.indexOf('//') === 0)
       }
     }
   }
