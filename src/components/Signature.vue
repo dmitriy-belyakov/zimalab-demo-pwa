@@ -3,8 +3,8 @@
     <div class="container">
       <div class="row">
         <div class="col-12 mt-2">
-          <vue-signature class="signature" ref="signature" :sigOption="option" :w="'90%'" :h="'400px'"></vue-signature>
-          <img v-bind:src="lastUrl" v-show="lastUrl !== ''"/>
+          <vue-signature v-show="lastUrl === ''" class="signature" ref="signature" :sigOption="option" :w="'90%'" :h="'400px'"></vue-signature>
+          <img v-bind:src="lastUrl" v-show="lastUrl !== ''" alt="Avatar"/>
         </div>
 
         <div class="button_container">
@@ -86,12 +86,13 @@
     background-origin: border-box;
     background-clip: content-box, border-box;
   }
-  /*img {
-    border: double 3px transparent;
-    margin-top: 5px;
+  .img_signature {
+    width: 90%;
+    height: 400px;
+    border: double 3px;
     border-radius: 5px;
-    radial-gradient(circle at top left, #4bc5e8, #9f6274);
-  }*/
+    border-image: radial-gradient(circle at top left, #4bc5e8, #9f6274);;
+  }
   .button_container{
     margin-top: 5px;
     display: flex;
