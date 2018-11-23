@@ -1,6 +1,6 @@
 {
-  "name": "cropchat",
-  "short_name": "cropchat",
+  "name": "QR code scanner",
+  "short_name": "qr-scanner",
   "icons": [
     {
       "src": "/static/img/icons/cropchat-icon-64x64.png",

@@ -9,10 +9,12 @@
     <link rel="icon" type="image/png" sizes="16x16" href="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/favicon-16x16.png">
     <!--[if IE]><link rel="shortcut icon" href="/static/img/icons/favicon.ico"><![endif]-->
     <!-- Add to home screen for Android and modern mobile browsers -->
-    <link rel="manifest" href="<%= htmlWebpackPlugin.files.publicPath %>static/manifest.json">
+    <!-- <link rel="manifest" href="<%= htmlWebpackPlugin.files.publicPath %>static/manifest.json"> -->
+    <link rel="manifest" href="<%= htmlWebpackPlugin.files.publicPath %>static/manifest.webmanifest">
     <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
     <meta name="theme-color" content="#4DBA87">
-
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=b3b56760-dc4c-4cb5-a2d7-b34eb885ac0c&lang=ru_RU" type="text/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxmyfiXz7w1yrAGl_zQIsWFWtOWRyhU4A" async defer></script>
     <!-- Add to home screen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -32,6 +34,7 @@
       This is your fallback content in case JavaScript fails to load.
     </noscript>
     <div id="app"></div>
+    
     <!-- Todo: only include in production -->
     <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
     <!-- built files will be auto injected -->
