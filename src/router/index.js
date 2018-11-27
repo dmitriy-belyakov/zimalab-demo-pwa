@@ -7,6 +7,7 @@ import Camera from '@/components/Camera'
 import OfflineExample from '@/components/OfflineExample'
 import Workers from '@/components/Workers'
 import TextPage from '@/components/TextPage'
+import Forms from '@/components/Forms'
 
 Vue.use(Router)
 
@@ -47,6 +48,11 @@ export default new Router({
       path: '/textpage',
       name: 'Text page',
       component: TextPage
+    },
+    {
+      path: '/purchaseaduck',
+      name: 'Purchase a duck',
+      component: Forms
     }
   ]
 })

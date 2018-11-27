@@ -15,10 +15,16 @@
         <router-link class="mdl-navigation__link" to="/workers" @click.native="hideMenu">Workers</router-link>
         <router-link class="mdl-navigation__link" to="/offlineexample" @click.native="hideMenu">Offline mode</router-link>
         <router-link class="mdl-navigation__link" to="/textpage" @click.native="hideMenu">Text Page</router-link>
+        <router-link class="mdl-navigation__link" to="/purchaseaduck" @click.native="hideMenu">Purchase a duck</router-link>
       </nav>
     </div>
     <main class="mdl-layout__content">
       <div class="page-content">
+        <offline @detected-condition="handleConnectivityChange"></offline>
+
+        <div v-show="!haveInternetConnetion" class="alert alert-warning offline" role="alert" style="margin-top: 10px;">
+            You are in offline mode
+        </div>
         <router-view></router-view>
       </div>
     </main>
@@ -27,15 +33,26 @@
 
 <script>
   /* eslint-disable no-unused-vars */
-
+  import offline from 'v-offline'
   import { QrcodeReader } from 'vue-qrcode-reader'
   require('material-design-lite')
   export default {
     name: 'app',
+    components: {
+      offline
+    },
+    data: function () {
+      return {
+        haveInternetConnetion: true
+      }
+    },
     methods: {
       hideMenu: function () {
         document.getElementsByClassName('mdl-layout__drawer')[0].classList.remove('is-visible')
         document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.remove('is-visible')
+      },
+      handleConnectivityChange (status) {
+        this.haveInternetConnetion = status
       }
     }
   }
@@ -75,5 +92,11 @@
     letter-spacing: .02em;
     font-weight: 400;
     box-sizing: border-box;
+  }
+
+  .offline {
+    width: 92%;
+    margin-left: auto;
+    margin-right: auto;
   }
 </style>
