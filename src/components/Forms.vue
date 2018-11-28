@@ -47,7 +47,8 @@
             <button class="btn btn-primary"
                     @click="backToProductPage()"
                     style="margin-top: 20px; margin-bottom: 20px;">
-                    Choose another product</button>
+                    Choose another product
+            </button>
         </div>
 
         <!-- Form step 1 -->
@@ -181,13 +182,15 @@
                     <button class="btn btn-primary"
                             @click="backToProductPage()"
                             type="button">
-                            Back to choosing a duck</button>
+                            Back to choosing a duck
+                    </button>
                 </div>
                 <div class="col-6 text-right">
                     <b-button   type="submit"
                                 variant="primary"
                                 :disabled="formStepOneComplete ? false : true">
-                                Next step</b-button>
+                                Next step
+                    </b-button>
                 </div>
             </div>                
         </b-form>
@@ -270,13 +273,15 @@
                     <button class="btn btn-primary"
                             @click="backToFirstStep()"
                             type=button>
-                            Previous step</button>
+                            Previous step
+                    </button>
                 </div>
                 <div class="col-6 text-right">
                     <b-button   type="submit"
                                 variant="primary"
                                 :disabled="formStepTwoComplete ? false : true">
-                                Purchase</b-button>
+                                Purchase
+                    </b-button>
                 </div>
             </div>                
         </b-form>
