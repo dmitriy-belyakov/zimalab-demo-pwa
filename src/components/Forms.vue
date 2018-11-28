@@ -7,8 +7,8 @@
                         icon-class="fa fa-check">
         </step-progress>
 
-        <!-- List of products -->
-        <div v-if="!productSelected" class="product-select">
+        <!-- List of products (form step 0) -->
+        <div v-if="formStep === 0" class="product-select">
             <!-- using index because without it will be an error (duplicated key) -->
             <div    v-for="(prod, index) in products"
                     :key="index"
@@ -23,259 +23,263 @@
             </div>
         </div>
 
-        <!-- Form for purchasing product -->
-        <div v-if="productSelected" class="purchase"> 
+        <!-- Information about user (form step 3) -->
+        <div v-if="formStep === 4" class="user-information text-left">
+            <h5>You purchased:</h5>
+            Product: {{ productSelected.name }}<br>
+            Quantity: {{ form.quantity }}<br>
+            Total cost: {{ productSelected.cost * form.quantity }}$<br>
 
-            <div v-if="submitted" class="user-information text-left">
-                <h5>You purchased:</h5>
-                Product: {{ productSelected.name }}<br>
-                Quantity: {{ form.quantity }}<br>
-                Total cost: {{ productSelected.cost * form.quantity }}$<br>
+            <!-- inline css because tje <br> above doesn't work in build version -->
+            <h5 style="margin-top: 15px;">Delivery information:</h5>
+            Name: {{ form.name }}<br>
+            Country: {{ form.country }}<br>
+            State: {{ form.countryState }}<br>
+            City: {{ form.city }}<br>
+            Adress: {{ form.adress }}<br>
+            Adress 2: {{ form.adress2 }}<br>
+            Delivery date: {{ form.deliveryDate }}<br>
+            Email: {{ form.email }}<br>
+            Card number: {{ form.cardNumber }}<br>
+            Card CVS code: {{ form.cardCVS }}<br>
+            Card valid thru: {{ form.cardValidThru }}<br>
 
-                <!-- inline css because <br> above doesn't work in build version -->
-                <h5 style="margin-top: 15px;">Delivery information:</h5>
-                Name: {{ form.name }}<br>
-                Country: {{ form.country }}<br>
-                State: {{ form.countryState }}<br>
-                City: {{ form.city }}<br>
-                Adress: {{ form.adress }}<br>
-                Adress 2: {{ form.adress2 }}<br>
-                Delivery date: {{ form.deliveryDate }}<br>
-                Email: {{ form.email }}<br>
-                Card number: {{ form.cardNumber }}<br>
-                Card CVS code: {{ form.cardCVS }}<br>
-                Card valid thru: {{ form.cardValidThru }}<br><br>
-                <br><button class="btn btn-primary" @click="backToProductPage()">Choose another product</button>
+            <button class="btn btn-primary"
+                    @click="backToProductPage()"
+                    style="margin-top: 20px; margin-bottom: 20px;">
+                    Choose another product</button>
+        </div>
+
+        <!-- Form step 1 -->
+        <b-form @submit="onSubmitStep1"
+                v-if="formStep === 1"
+                class="form-page"><br>
+            
+            <div class="row">
+                <div class="col-3" style="margin-top: 5px;">
+                    Quantity: 
+                </div>
+                <div class="col-9">
+                    <b-form-group   :invalid-feedback="invalidFeedbackQuantity"
+                                    :valid-feedback="validFeedbackQuantity"
+                                    :state="stateQuantity">
+                        <b-form-input   type="number"
+                                        v-model="form.quantity"
+                                        :state="stateQuantity"
+                                        placeholder="Enter quantity">
+                        </b-form-input>
+                    </b-form-group>
+                </div>
             </div>
 
-            <!-- Form step 1 -->
-            <b-form @submit="onSubmitStep1" v-if="formStep === 1 && !submitted" class="form-page"><br>
-                <div class="row">
-                    <div class="col-3" style="margin-top: 5px;">
-                        Quantity: 
-                    </div>
-                    <div class="col-9">
-                        <b-form-group   :invalid-feedback="invalidFeedbackQuantity"
-                                        :valid-feedback="validFeedbackQuantity"
-                                        :state="stateQuantity">
-                            <b-form-input   type="number"
-                                            v-model="form.quantity"
-                                            :state="stateQuantity"
-                                            placeholder="Enter quantity">
-                            </b-form-input>
-                        </b-form-group>
-                    </div>
+            <div class="row">
+                <div class="col-3" style="margin-top: 5px;">
+                    Name: 
                 </div>
-
-                <div class="row">
-                    <div class="col-3" style="margin-top: 5px;">
-                        Name: 
-                    </div>
-                    <div class="col-9">
-                        <b-form-group   :invalid-feedback="invalidFeedbackName"
-                                        :valid-feedback="validFeedbackName"
-                                        :state="stateName">
-                            <b-form-input   type="text"
-                                            v-model="form.name"
-                                            :state="form.name ? stateName : null"
-                                            placeholder="Enter name">
-                            </b-form-input>
-                        </b-form-group>
-                    </div>
+                <div class="col-9">
+                    <b-form-group   :invalid-feedback="invalidFeedbackName"
+                                    :valid-feedback="validFeedbackName"
+                                    :state="stateName">
+                        <b-form-input   type="text"
+                                        v-model="form.name"
+                                        :state="form.name ? stateName : null"
+                                        placeholder="Enter name">
+                        </b-form-input>
+                    </b-form-group>
                 </div>
+            </div>
 
-                <div class="row" style="margin-bottom: 15px;">
-                    <div class="col-3" style="margin-top: 5px;">
-                        Country: 
-                    </div>
-                    <div class="col-9">
-                        <country-select v-model="form.country"
-                                        :country="form.country"
-                                        countryName="true"
-                                        topCountry="United States"
-                                        class="form-control" />
-                    </div>
+            <div class="row" style="margin-bottom: 15px;">
+                <div class="col-3" style="margin-top: 5px;">
+                    Country: 
                 </div>
-                
-                <div class="row" style="margin-bottom: 15px;">
-                    <div class="col-3" style="margin-top: 5px;">
-                        State: 
-                    </div>
-                    <div class="col-9">
-                        <region-select  v-model="form.countryState"
-                                        :country="form.country"
-                                        :region="form.countryState"
-                                        countryName="true"
-                                        :disabled="form.country ? false : true"
-                                        class="form-control" />
-                    </div>
+                <div class="col-9">
+                    <country-select v-model="form.country"
+                                    :country="form.country"
+                                    countryName="true"
+                                    topCountry="United States"
+                                    class="form-control" />
                 </div>
-
-                <div class="row">
-                    <div class="col-3" style="margin-top: 5px;">
-                        City: 
-                    </div>
-                    <div class="col-9">
-                        <b-form-group   :invalid-feedback="invalidFeedbackCity"
-                                        :valid-feedback="validFeedbackCity"
-                                        :state="form.city ? stateCity : null">
-                            <b-form-input   type="text"
-                                            v-model="form.city"
-                                            :state="form.city ? stateCity : null"
-                                            placeholder="Enter city">
-                            </b-form-input>
-                        </b-form-group>
-                    </div>
+            </div>
+            
+            <div class="row" style="margin-bottom: 15px;">
+                <div class="col-3" style="margin-top: 5px;">
+                    State: 
                 </div>
-
-                <div class="row" style="margin-bottom: 15px;">
-                    <div class="col-3" style="margin-top: 5px;">
-                        Delivery date: 
-                    </div>
-                    <div class="col-9">
-                        <date-picker v-model="form.deliveryDate" :config="dateOptions"></date-picker>
-                    </div>
+                <div class="col-9">
+                    <region-select  v-model="form.countryState"
+                                    :country="form.country"
+                                    :region="form.countryState"
+                                    countryName="true"
+                                    :disabled="form.country ? false : true"
+                                    class="form-control" />
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-3">
-                        Delivery adress: 
-                    </div>
-                    <div class="col-9">
-                        <b-form-group   :invalid-feedback="invalidFeedbackAdress"
-                                        :valid-feedback="validFeedbackAdress"
-                                        :state="this.form.adress ? stateAdress : null">
-                            <b-form-input   type="text"
-                                            v-model="form.adress"
-                                            :state="this.form.adress ? stateAdress : null"
-                                            placeholder="Enter adress">
-                            </b-form-input>
-                        </b-form-group>
-                    </div>
+            <div class="row">
+                <div class="col-3" style="margin-top: 5px;">
+                    City: 
                 </div>
-
-                <div class="row">
-                    <div class="col-3">
-                        Delivery second adress (optional): 
-                    </div>
-                    <div class="col-9">
-                        <b-form-group   :invalid-feedback="invalidFeedbackAdress2"
-                                        :valid-feedback="validFeedbackAdress2"
-                                        :state="this.form.adress2 ? stateAdress2 : null">
-                            <b-form-input   type="text"
-                                            v-model="form.adress2"
-                                            :state="this.form.adress2 ? stateAdress2 : null"
-                                            placeholder="Enter second adress">
-                            </b-form-input>
-                        </b-form-group>
-                    </div>
+                <div class="col-9">
+                    <b-form-group   :invalid-feedback="invalidFeedbackCity"
+                                    :valid-feedback="validFeedbackCity"
+                                    :state="form.city ? stateCity : null">
+                        <b-form-input   type="text"
+                                        v-model="form.city"
+                                        :state="form.city ? stateCity : null"
+                                        placeholder="Enter city">
+                        </b-form-input>
+                    </b-form-group>
                 </div>
+            </div>
 
-                <div class="row" style="margin-top: 40px">
-                    <div class="col-6 text-left">
-                        <button class="btn btn-primary"
-                                @click="backToProductPage()"
-                                type="button">
-                                Back to choosing a duck</button>
-                    </div>
-                    <div class="col-6 text-right">
-                        <b-button   type="submit"
-                                    variant="primary"
-                                    :disabled="formStepOneComplete ? false : true">
-                                    Next step</b-button>
-                    </div>
-                </div>                
-            </b-form>
-
-            <!-- Form step 2 -->
-            <b-form @submit="onSubmitStep2" v-if="formStep === 2 && !submitted"><br>
-                <div class="row">
-                    <div class="col-3" style="margin-top: 5px;">
-                        Email: 
-                    </div>
-                    <div class="col-9">
-                        <b-form-group   :invalid-feedback="invalidFeedbackEmail"
-                                        :valid-feedback="validFeedbackEmail"
-                                        :state="stateEmail">
-                            <b-form-input   type="email"
-                                            v-model="form.email"
-                                            :state="form.email ? stateEmail : null"
-                                            placeholder="Enter email">
-                            </b-form-input>
-                        </b-form-group>
-                    </div>
+            <div class="row" style="margin-bottom: 15px;">
+                <div class="col-3" style="margin-top: 5px;">
+                    Delivery date: 
                 </div>
-
-                <div class="row">
-                    <div class="col-3" style="margin-top: 5px;">
-                        Card number: 
-                    </div>
-                    <div class="col-9">
-                        <b-form-group   :invalid-feedback="invalidFeedbackCardNumber"
-                                        :valid-feedback="validFeedbackCardNumber"
-                                        :state="stateCardNumber">
-                            <b-form-input   type="text"
-                                            v-model="form.cardNumber"
-                                            v-mask="'#### #### #### ####'"
-                                            :state="form.cardNumber ? stateCardNumber : null"
-                                            placeholder="Enter your card number">
-                            </b-form-input>
-                        </b-form-group>
-                    </div>
-                </div>     
-
-                <div class="row">
-                    <div class="col-3" style="margin-top: 5px;">
-                        Card valdi thru: 
-                    </div>
-                    <div class="col-9">
-                        <b-form-group   :invalid-feedback="invalidFeedbackValidThru"
-                                        :valid-feedback="validFeedbackValidThru"
-                                        :state="form.cardValidThru ? stateValidThru : null">
-                            <b-form-input   type="text"
-                                            v-model="form.cardValidThru"
-                                            v-mask="'##/##'"
-                                            :state="form.cardValidThru ? stateValidThru : null"
-                                            placeholder="Enter your card valid thru date">
-                            </b-form-input>
-                        </b-form-group>
-                    </div>
+                <div class="col-9">
+                    <date-picker v-model="form.deliveryDate" :config="dateOptions"></date-picker>
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-3" style="margin-top: 5px;">
-                        Card CVS code: 
-                    </div>
-                    <div class="col-9">
-                        <b-form-group   :invalid-feedback="invalidFeedbackCVS"
-                                        :valid-feedback="validFeedbackCVS"
-                                        :state="form.cardCVS ? stateCVS : null">
-                            <b-form-input   type="text"
-                                            v-model="form.cardCVS"
-                                            v-mask="'###'"
-                                            :state="form.cardCVS === '' ? null : stateCVS"
-                                            placeholder="Enter your card CVS code">
-                            </b-form-input>
-                        </b-form-group>
-                    </div>
+            <div class="row">
+                <div class="col-3">
+                    Delivery adress: 
                 </div>
+                <div class="col-9">
+                    <b-form-group   :invalid-feedback="invalidFeedbackAdress"
+                                    :valid-feedback="validFeedbackAdress"
+                                    :state="this.form.adress ? stateAdress : null">
+                        <b-form-input   type="text"
+                                        v-model="form.adress"
+                                        :state="this.form.adress ? stateAdress : null"
+                                        placeholder="Enter adress">
+                        </b-form-input>
+                    </b-form-group>
+                </div>
+            </div>
 
-                <div class="row" style="margin-top: 40px">
-                    <div class="col-6 text-left">
-                        <button class="btn btn-primary"
-                                @click="backToFirstStep()"
-                                type=button>
-                                Previous step</button>
-                    </div>
-                    <div class="col-6 text-right">
-                        <b-button   type="submit"
-                                    variant="primary"
-                                    :disabled="formStepTwoComplete ? false : true">
-                                    Purchase</b-button>
-                    </div>
-                </div>                
-            </b-form>
-        </div>
+            <div class="row">
+                <div class="col-3">
+                    Delivery second adress (optional): 
+                </div>
+                <div class="col-9">
+                    <b-form-group   :invalid-feedback="invalidFeedbackAdress2"
+                                    :valid-feedback="validFeedbackAdress2"
+                                    :state="this.form.adress2 ? stateAdress2 : null">
+                        <b-form-input   type="text"
+                                        v-model="form.adress2"
+                                        :state="this.form.adress2 ? stateAdress2 : null"
+                                        placeholder="Enter second adress">
+                        </b-form-input>
+                    </b-form-group>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 40px">
+                <div class="col-6 text-left">
+                    <button class="btn btn-primary"
+                            @click="backToProductPage()"
+                            type="button">
+                            Back to choosing a duck</button>
+                </div>
+                <div class="col-6 text-right">
+                    <b-button   type="submit"
+                                variant="primary"
+                                :disabled="formStepOneComplete ? false : true">
+                                Next step</b-button>
+                </div>
+            </div>                
+        </b-form>
+
+        <!-- Form step 2 -->
+        <b-form @submit="onSubmitStep2" v-if="formStep === 2"><br>
+            <div class="row">
+                <div class="col-3" style="margin-top: 5px;">
+                    Email: 
+                </div>
+                <div class="col-9">
+                    <b-form-group   :invalid-feedback="invalidFeedbackEmail"
+                                    :valid-feedback="validFeedbackEmail"
+                                    :state="stateEmail">
+                        <b-form-input   type="email"
+                                        v-model="form.email"
+                                        :state="form.email ? stateEmail : null"
+                                        placeholder="Enter email">
+                        </b-form-input>
+                    </b-form-group>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3" style="margin-top: 5px;">
+                    Card number: 
+                </div>
+                <div class="col-9">
+                    <b-form-group   :invalid-feedback="invalidFeedbackCardNumber"
+                                    :valid-feedback="validFeedbackCardNumber"
+                                    :state="stateCardNumber">
+                        <b-form-input   type="text"
+                                        v-model="form.cardNumber"
+                                        v-mask="'#### #### #### ####'"
+                                        :state="form.cardNumber ? stateCardNumber : null"
+                                        placeholder="Enter your card number">
+                        </b-form-input>
+                    </b-form-group>
+                </div>
+            </div>     
+
+            <div class="row">
+                <div class="col-3" style="margin-top: 5px;">
+                    Card valdi thru: 
+                </div>
+                <div class="col-9">
+                    <b-form-group   :invalid-feedback="invalidFeedbackValidThru"
+                                    :valid-feedback="validFeedbackValidThru"
+                                    :state="form.cardValidThru ? stateValidThru : null">
+                        <b-form-input   type="text"
+                                        v-model="form.cardValidThru"
+                                        v-mask="'##/##'"
+                                        :state="form.cardValidThru ? stateValidThru : null"
+                                        placeholder="Enter your card valid thru date">
+                        </b-form-input>
+                    </b-form-group>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3" style="margin-top: 5px;">
+                    Card CVS code: 
+                </div>
+                <div class="col-9">
+                    <b-form-group   :invalid-feedback="invalidFeedbackCVS"
+                                    :valid-feedback="validFeedbackCVS"
+                                    :state="form.cardCVS ? stateCVS : null">
+                        <b-form-input   type="text"
+                                        v-model="form.cardCVS"
+                                        v-mask="'###'"
+                                        :state="form.cardCVS === '' ? null : stateCVS"
+                                        placeholder="Enter your card CVS code">
+                        </b-form-input>
+                    </b-form-group>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 40px">
+                <div class="col-6 text-left">
+                    <button class="btn btn-primary"
+                            @click="backToFirstStep()"
+                            type=button>
+                            Previous step</button>
+                </div>
+                <div class="col-6 text-right">
+                    <b-button   type="submit"
+                                variant="primary"
+                                :disabled="formStepTwoComplete ? false : true">
+                                Purchase</b-button>
+                </div>
+            </div>                
+        </b-form>
     </div>    
 </template>
 
@@ -311,15 +315,9 @@
                     cardCVS: '',
                     cardValidThru: ''
                 },
-                submitted: false,
-                genderOptions: [
-                    { value: null, text: 'Your gender' },
-                    { value: 'Other', text: 'Other' },
-                    { value: 'Male', text: 'Male' },
-                    { value: 'Female', text: 'Female' },
-                ],
                 minNameLength: 3,
-                minSurnameLength: 3,
+                minAdressLength: 4,
+                minCityLength: 4,
                 products: [
                     {
                         name: 'Duck 1',
@@ -343,7 +341,6 @@
                     }
                 ],
                 steps: ['Select a duck', 'Delivery', 'Payment', 'Purchased!'],
-                noback: false,
                 dateOptions: {
                     format: 'DD/MM/YYYY',
                     useCurrent: false,
@@ -446,12 +443,10 @@
 
             /* Validation for city */
             stateCity () {
-                return this.form.city.length > 3
+                return this.form.city.length > this.minCityLength
             },
             invalidFeedbackCity () {
                 if (this.stateCity) {
-                    return ''
-                } else if (this.stateCity === '') {
                     return ''
                 } else {
                     return 'Too short city name'
@@ -463,12 +458,10 @@
 
             /* Validation for first adress */
             stateAdress () {
-                return this.form.adress.length > 3
+                return this.form.adress.length > this.minAdressLength
             },
             invalidFeedbackAdress () {
                 if (this.adress) {
-                    return ''
-                } else if (this.adress === '') {
                     return ''
                 } else {
                     return 'Too short adress'
@@ -480,12 +473,10 @@
 
             /* Validation for second adress (same as for first) */
             stateAdress2 () {
-                return this.form.adress2.length > 3
+                return this.form.adress2.length > this.minAdressLength
             },
             invalidFeedbackAdress2 () {
                 if (this.adress2) {
-                    return ''
-                } else if (this.adress2 === '') {
                     return ''
                 } else {
                     return 'Too short adress'
@@ -539,8 +530,7 @@
             },
             onSubmitStep2 (event) {
                 event.preventDefault() // without it page reloads on submit
-                this.formStep = 4
-                this.submitted = true
+                this.formStep = 4 // jumps to 4 after 2 for the step-progress' fourth step be done
             },
             resetFormData () {
                 this.form.name = ''
@@ -551,7 +541,6 @@
                 this.form.zipcode = ''
                 this.form.cardNumber = ''
                 this.form.quantity = 1
-                this.submitted = false
             },
             backToProductPage () {
                 this.resetFormData()
