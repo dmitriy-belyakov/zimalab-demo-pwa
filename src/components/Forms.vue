@@ -349,6 +349,7 @@
                 dateOptions: {
                     format: 'DD/MM/YYYY',
                     useCurrent: false,
+                    minDate: new Date()
                 } 
             }
         },
