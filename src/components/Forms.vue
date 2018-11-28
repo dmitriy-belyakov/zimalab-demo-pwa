@@ -1,14 +1,23 @@
 <template>
     <!-- inline css is used because after building width of container breaks -->
     <div class="container" style="max-width: 600px;">
-        <step-progress :steps="steps" :current-step="formStep" icon-class="fa fa-check"></step-progress>
+        <!-- Progress stepper -->
+        <step-progress  :steps="steps"
+                        :current-step="formStep"
+                        icon-class="fa fa-check">
+        </step-progress>
 
         <!-- List of products -->
         <div v-if="!productSelected" class="product-select">
             <!-- using index because without it will be an error (duplicated key) -->
-            <div v-for="(prod, index) in products" :key="index" class="product-container" @click="selectProduct(products[index])">
+            <div    v-for="(prod, index) in products"
+                    :key="index"
+                    class="product-container"
+                    @click="selectProduct(products[index])">
                 <div class="image-container">
-                    <b-img :src="products[index].img" :alt="products[index].name" class="product-image"/>
+                    <b-img  :src="products[index].img"
+                            :alt="products[index].name"
+                            class="product-image"/>
                 </div>
                 Cost: {{ products[index].cost }}$
             </div>
@@ -41,7 +50,6 @@
 
             <!-- Form step 1 -->
             <b-form @submit="onSubmitStep1" v-if="formStep === 1 && !submitted" class="form-page"><br>
-
                 <div class="row">
                     <div class="col-3" style="margin-top: 5px;">
                         Quantity: 
@@ -165,7 +173,10 @@
 
                 <div class="row" style="margin-top: 40px">
                     <div class="col-6 text-left">
-                        <button class="btn btn-primary" @click="backToProductPage()">Back to choosing a duck</button>
+                        <button class="btn btn-primary"
+                                @click="backToProductPage()"
+                                type="button">
+                                Back to choosing a duck</button>
                     </div>
                     <div class="col-6 text-right">
                         <b-button   type="submit"
@@ -251,13 +262,16 @@
 
                 <div class="row" style="margin-top: 40px">
                     <div class="col-6 text-left">
-                        <button class="btn btn-primary" @click="backToFirstStep()" type=button>Previous step</button>
+                        <button class="btn btn-primary"
+                                @click="backToFirstStep()"
+                                type=button>
+                                Previous step</button>
                     </div>
                     <div class="col-6 text-right">
                         <b-button   type="submit"
                                     variant="primary"
-                                    :disabled="formStepTwoComplete ? false : true"
-                                    >Purchase</b-button>
+                                    :disabled="formStepTwoComplete ? false : true">
+                                    Purchase</b-button>
                     </div>
                 </div>                
             </b-form>
