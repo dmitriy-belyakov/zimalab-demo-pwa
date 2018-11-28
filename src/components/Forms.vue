@@ -69,7 +69,7 @@
                                         :state="stateName">
                             <b-form-input   type="text"
                                             v-model="form.name"
-                                            :state="form.name === '' ? null : stateName"
+                                            :state="form.name ? stateName : null"
                                             placeholder="Enter name">
                             </b-form-input>
                         </b-form-group>
@@ -110,10 +110,10 @@
                     <div class="col-9">
                         <b-form-group   :invalid-feedback="invalidFeedbackCity"
                                         :valid-feedback="validFeedbackCity"
-                                        :state="form.city == '' ? null : stateCity">
+                                        :state="form.city ? stateCity : null">
                             <b-form-input   type="text"
                                             v-model="form.city"
-                                            :state="form.city == '' ? null : stateCity"
+                                            :state="form.city ? stateCity : null"
                                             placeholder="Enter city">
                             </b-form-input>
                         </b-form-group>
@@ -136,10 +136,10 @@
                     <div class="col-9">
                         <b-form-group   :invalid-feedback="invalidFeedbackAdress"
                                         :valid-feedback="validFeedbackAdress"
-                                        :state="(this.form.adress == '') ? null : stateAdress">
+                                        :state="this.form.adress ? stateAdress : null">
                             <b-form-input   type="text"
                                             v-model="form.adress"
-                                            :state="(this.form.adress == '') ? null : stateAdress"
+                                            :state="this.form.adress ? stateAdress : null"
                                             placeholder="Enter adress">
                             </b-form-input>
                         </b-form-group>
@@ -153,10 +153,10 @@
                     <div class="col-9">
                         <b-form-group   :invalid-feedback="invalidFeedbackAdress2"
                                         :valid-feedback="validFeedbackAdress2"
-                                        :state="(this.form.adress2 == '') ? null : stateAdress2">
+                                        :state="this.form.adress2 ? stateAdress2 : null">
                             <b-form-input   type="text"
                                             v-model="form.adress2"
-                                            :state="(this.form.adress2 == '') ? null : stateAdress2"
+                                            :state="this.form.adress2 ? stateAdress2 : null"
                                             placeholder="Enter second adress">
                             </b-form-input>
                         </b-form-group>
@@ -188,7 +188,7 @@
                                         :state="stateEmail">
                             <b-form-input   type="email"
                                             v-model="form.email"
-                                            :state="form.email === '' ? null : stateEmail"
+                                            :state="form.email ? stateEmail : null"
                                             placeholder="Enter email">
                             </b-form-input>
                         </b-form-group>
@@ -206,7 +206,7 @@
                             <b-form-input   type="text"
                                             v-model="form.cardNumber"
                                             v-mask="'#### #### #### ####'"
-                                            :state="form.cardNumber === '' ? null : stateCardNumber"
+                                            :state="form.cardNumber ? stateCardNumber : null"
                                             placeholder="Enter your card number">
                             </b-form-input>
                         </b-form-group>
