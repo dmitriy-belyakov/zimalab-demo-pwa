@@ -2,13 +2,14 @@
     <div class="container">
         <div v-for="img in imagesCropped" :key="img" v-show="showCropped" class="imageContainer">
             <b-img :src="img" v-show="showCropped" class="croppedImage"/>
-        </div>
+        </div><br>
+        
         <clip-loader v-show="loading"></clip-loader>
+
         <label class="uploadLabel" style="position: relative">
-            <input multiple="multiple" type="file" accept="image/*;capture=camera" @change="onFileChangeAndShowLoading">
+            <input multiple="multiple" type="file" accept="image/*;capture=camera" @change="onFileChanged">
             <span class="btn btn-primary">{{image ? 'Take another picture' : 'Take a picture'}}</span>
         </label>
-        <!-- <p>Loading: {{ loading }}</p> -->
     </div>
 </template>
 
@@ -34,17 +35,23 @@
             onFileChangeAndShowLoading (event) {
                 this.showCropped = false
                 this.loading = true
+                // without setTimeout the above code will be waiting for loading
                 setTimeout(() => {
                     this.onFileChanged(event)
                 }, 1);
             },
             onFileChanged (event) {
                 this.showCropped = false
-                this.image = event.target.files[0]
-                this.imagesCropped = []
-                for (var i = 0; i < event.target.files.length; i++) {
-                    this.addNewImage(event.target.files[i])
-                }
+                this.loading = true
+                // without setTimeout the above code will be waiting for loading
+                setTimeout(() => {
+                    this.showCropped = false
+                    this.image = event.target.files[0]
+                    this.imagesCropped = []
+                    for (var i = 0; i < event.target.files.length; i++) {
+                        this.addNewImage(event.target.files[i])
+                    }                    
+                }, 1);
             },
             addNewImage (image) {
                 var reader = new FileReader()
@@ -52,7 +59,7 @@
                 reader.addEventListener('load', function() {
                     self.imagesCropped.push(reader.result)
                     self.loading = false
-                    self.showCropped = true;
+                    self.showCropped = true
                 })
                 if (this.image) {
                     if (/\.(jpe?g|png|gif)$/i.test(this.image.name)) {

@@ -2,10 +2,6 @@
     <div class="container">
         <offline @detected-condition="handleConnectivityChange"></offline>
 
-        <!-- <div v-show="!haveInternetConnetion" class="alert alert-warning" role="alert" style="margin-top: 10px;">
-            You are in offline mode
-        </div> -->
-
         <!-- Get location by navigator.geolocation -->
         <div class="card text-center">
             <div class="card-header">

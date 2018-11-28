@@ -5,6 +5,7 @@
 
         <!-- List of products -->
         <div v-if="!productSelected" class="product-select">
+            <!-- using index because without it will be an error (duplicated key) -->
             <div v-for="(prod, index) in products" :key="index" class="product-container" @click="selectProduct(products[index])">
                 <div class="image-container">
                     <b-img :src="products[index].img" :alt="products[index].name" class="product-image"/>
