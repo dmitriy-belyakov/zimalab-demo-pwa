@@ -10,7 +10,7 @@
                     <button class="btn btn-outline-primary float-left" @click="save">Save</button>
                         <button class="btn btn-outline-primary float-left" @click="clear">Clear</button>
                     <button class="btn btn-outline-primary float-left" @click="undo">Undo</button>
-                    <button class="btn btn-outline-primary float-left" @click="addWaterMark">addWaterMark</button>
+                    <button class="btn btn-outline-primary float-left" @click="addWaterMark">Add watermark</button>
                 </div>
             </div>
         </div>
