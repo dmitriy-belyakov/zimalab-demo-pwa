@@ -18,7 +18,7 @@
 
                 <button
                     @click="navigatorLocation.showOnMap ?
-                        navigatorLocation.showOnMap = false :
+                        hideMapNavigator() :
                         initGoogleMap(navigatorLocation, 'navigatorLocationMap')"
                     v-if="navigatorLocation.latitude && navigatorLocation.longitude"
                     :disabled="!haveInternetConnetion"
@@ -50,7 +50,7 @@
 
                 <button
                     @click="yandexLocation.showOnMap ?
-                        yandexLocation.showOnMap = false :
+                        hideMapYandex() :
                         initGoogleMap(yandexLocation, 'yandexLocationMap')"
                     v-if="yandexLocation.latitude && yandexLocation.longitude"
                     :disabled="!haveInternetConnetion"
@@ -82,7 +82,7 @@
 
                 <button
                     @click="googleLocation.showOnMap ?
-                        googleLocation.showOnMap = false :
+                        hideMapGoogle() :
                         initGoogleMap(googleLocation, 'googleLocationMap')"
                     v-if="googleLocation.latitude && googleLocation.longitude"
                     :disabled="!haveInternetConnetion"
@@ -133,6 +133,7 @@
         },
         methods: {
             getLocationByNavigatorGeolocation () {
+                this.$parent.playButtonSound()
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition((position) => {
                         this.navigatorLocation.latitude = position.coords.latitude
@@ -143,6 +144,7 @@
                 }
             },
             getLocationByYandex () {
+                this.$parent.playButtonSound()
                 var self = this // because 'this' goes undefined in the request below
                 ymaps.geolocation.get({
                     provider: 'yandex',
@@ -157,6 +159,7 @@
                     })     
             },
             getLocationByGoogle () {
+                this.$parent.playButtonSound()
                 const axios = require('axios')
                 axios.post('https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCl9yDG-rMvWULzgj1Psc7S624ORElAUDU')
                     .then(response => {
@@ -168,6 +171,7 @@
                     })
             },
             initGoogleMap (locationElement, domElementId) {
+                this.$parent.playButtonSound()
                 locationElement.showOnMap = true
                 var map = new google.maps.Map(document.getElementById(domElementId), {
                     center: {lat: locationElement.latitude, lng: locationElement.longitude},
@@ -181,6 +185,18 @@
             },
             handleConnectivityChange (status) {
                 this.haveInternetConnetion = status
+            },
+            hideMapNavigator () {
+                this.$parent.playButtonSound()
+                this.navigatorLocation.showOnMap = false
+            },
+            hideMapYandex () {
+                this.$parent.playButtonSound()
+                this.yandexLocation.showOnMap = false
+            },
+            hideMapGoogle () {
+                this.$parent.playButtonSound()
+                this.googleLocation.showOnMap = false
             }
         }
     }

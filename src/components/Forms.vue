@@ -533,10 +533,12 @@
             onSubmitStep1 (event) {
                 event.preventDefault() // without it page reloads on submit
                 this.formStep++
+                this.$parent.playButtonSound()
             },
             onSubmitStep2 (event) {
                 event.preventDefault() // without it page reloads on submit
                 this.formStep = 4 // jumps to 4 after 2 for the step-progress' fourth step be done
+                this.$parent.playButtonSound()
             },
             resetFormData () {
                 this.form.name = ''
@@ -552,15 +554,18 @@
                 this.resetFormData()
                 this.formStep = 0
                 this.productSelected = null
+                this.$parent.playButtonSound()
             },
             selectProduct (product) {
                 this.productSelected = product
                 this.formStep++
+                this.$parent.playButtonSound()
             },
             backToFirstStep () {
                 this.formStep = 1
                 console.log(this.form.formStep)
                 return false
+                this.$parent.playButtonSound()
             }
         }
     }

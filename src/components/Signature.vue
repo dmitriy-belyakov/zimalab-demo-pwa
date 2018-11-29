@@ -32,6 +32,7 @@
         },
         methods: {
             save () {
+                this.$parent.playButtonSound()
                 var _this = this
                 var png = _this.$refs.signature.save()
                 _this.lastUrl = png
@@ -52,15 +53,18 @@
                 document.body.removeChild(link)
             },
             clear () {
+                this.$parent.playButtonSound()
                 var _this = this
                 _this.lastUrl = ''
                 _this.$refs.signature.clear()
             },
             undo () {
+                this.$parent.playButtonSound()
                 var _this = this
                 _this.$refs.signature.undo()
             },
             addWaterMark () {
+                this.$parent.playButtonSound()
                 var _this = this
                 _this.$refs.signature.addWaterMark({
                     text: 'mark text', // watermark text, > default ''

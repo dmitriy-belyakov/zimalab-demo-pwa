@@ -1,10 +1,12 @@
 <template>
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" @click="headerClickHandler(event)">
     <header class="mdl-layout__header">
       <div class="mdl-layout__header-row">
         <span class="mdl-layout-title">{{$route.name}}</span>
-        <button class="btn btn-primary" style="margin-left: auto">Sound on</button>
-        <button class="btn btn-primary" style="margin-left: auto">Dark</button>
+        <div class="button-container" style="margin-left: auto">
+          <button class="btn btn-primary" @click="toggleSounds">{{ sounds ? 'Sound off' : 'Sound on'}}</button>
+          <button class="btn btn-primary" @click="toggleTheme">{{ darkTheme ? 'Light' : 'Dark'}}</button>
+        </div>
       </div>
     </header>
     <div class="mdl-layout__drawer">
@@ -27,6 +29,7 @@
         <div v-show="!haveInternetConnetion" class="alert alert-warning offline" role="alert" style="margin-top: 10px;">
             You are in offline mode
         </div>
+
         <router-view></router-view>
       </div>
     </main>
@@ -36,8 +39,7 @@
 <script>
   /* eslint-disable no-unused-vars */
   import offline from 'v-offline'
-  import { QrcodeReader } from 'vue-qrcode-reader'
-  
+  import { QrcodeReader } from 'vue-qrcode-reader'  
 
   require('material-design-lite')
 
@@ -50,11 +52,13 @@
       return {
         haveInternetConnetion: true,
         sounds: true,
-        darkTheme: false
+        darkTheme: false,
+        buttonSoundSrc: '/static/sounds/bubble.mp3'
       }
     },
     methods: {
       hideMenu: function () {
+        this.playButtonSound()
         document.getElementsByClassName('mdl-layout__drawer')[0].classList.remove('is-visible')
         document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.remove('is-visible')
       },
@@ -63,9 +67,22 @@
       },
       toggleSounds () {
         this.sounds = !this.sounds
+        this.playButtonSound()
       },
       toggleTheme () {
+        this.playButtonSound()
         this.darkTheme = !this.darkTheme
+      },
+      playButtonSound () {
+        if (this.sounds) {
+          var audio = new Audio(this.buttonSoundSrc);
+          audio.play();
+        }
+      },
+      headerClickHandler () {
+        if (event.offsetX <= 60 && event.offsetY < 50) {
+          this.playButtonSound()
+        }
       }
     }
   }

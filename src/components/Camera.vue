@@ -16,7 +16,7 @@
 
         <label class="uploadLabel" style="position: relative">
             <input multiple="multiple" type="file" accept="image/*;capture=camera" @change="onFileChanged">
-            <span class="btn btn-primary">{{image ? 'Take another picture' : 'Take a picture'}}</span>
+            <span class="btn btn-primary" @click="$parent.playButtonSound()">{{image ? 'Take another picture' : 'Take a picture'}}</span>
         </label>
     </div>
 </template>
@@ -63,6 +63,7 @@
         },
         methods: {
             deleteImage (index) {
+                this.$parent.playButtonSound()
                 this.imagesCropped.splice(index, 1)
             },
             onFileChangeAndShowLoading (event) {

@@ -7,7 +7,7 @@
         <p class="text-left">In offline mode butttons which require internet connection are disabled and look like this:</p> 
         <button class="btn btn-primary" disabled>Disabled button</button>
         <p class="text-left">And this is what enabled button looks like:</p>
-        <button class="btn btn-primary">Enabled button</button>
+        <button class="btn btn-primary" @click="$parent.playButtonSound()">Enabled button</button>
         <p style="margin-top: 10px;" class="text-left">To test the rest of application turn on airplane mode on your device</p>
     </div>
 </template>
