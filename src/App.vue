@@ -3,6 +3,8 @@
     <header class="mdl-layout__header">
       <div class="mdl-layout__header-row">
         <span class="mdl-layout-title">{{$route.name}}</span>
+        <button class="btn btn-primary" style="margin-left: auto">Sound on</button>
+        <button class="btn btn-primary" style="margin-left: auto">Dark</button>
       </div>
     </header>
     <div class="mdl-layout__drawer">
@@ -46,7 +48,9 @@
     },
     data: function () {
       return {
-        haveInternetConnetion: true
+        haveInternetConnetion: true,
+        sounds: true,
+        darkTheme: false
       }
     },
     methods: {
@@ -56,6 +60,12 @@
       },
       handleConnectivityChange (status) {
         this.haveInternetConnetion = status
+      },
+      toggleSounds () {
+        this.sounds = !this.sounds
+      },
+      toggleTheme () {
+        this.darkTheme = !this.darkTheme
       }
     }
   }
