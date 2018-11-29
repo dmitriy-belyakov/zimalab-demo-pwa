@@ -11,7 +11,7 @@
         <router-link class="mdl-navigation__link" to="/" @click.native="hideMenu">QR Code</router-link>
         <router-link class="mdl-navigation__link" to="/signature" @click.native="hideMenu">Signature</router-link>
         <router-link class="mdl-navigation__link" to="/geotag" @click.native="hideMenu">Geotag</router-link>
-        <router-link class="mdl-navigation__link" to="/camera" @click.native="hideMenu">Camera</router-link>
+        <router-link class="mdl-navigation__link" to="/imageupload" @click.native="hideMenu">Image upload</router-link>
         <router-link class="mdl-navigation__link" to="/workers" @click.native="hideMenu">Workers</router-link>
         <router-link class="mdl-navigation__link" to="/offlineexample" @click.native="hideMenu">Offline mode</router-link>
         <router-link class="mdl-navigation__link" to="/textpage" @click.native="hideMenu">Text Page</router-link>
@@ -35,7 +35,10 @@
   /* eslint-disable no-unused-vars */
   import offline from 'v-offline'
   import { QrcodeReader } from 'vue-qrcode-reader'
+  
+
   require('material-design-lite')
+
   export default {
     name: 'app',
     components: {

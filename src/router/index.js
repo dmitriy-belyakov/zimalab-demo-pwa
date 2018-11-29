@@ -30,8 +30,8 @@ export default new Router({
       component: Geotag
     },
     {
-      path: '/camera',
-      name: 'Camera',
+      path: '/imageupload',
+      name: 'Image upload',
       component: Camera
     },
     {
