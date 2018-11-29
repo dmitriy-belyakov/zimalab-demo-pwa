@@ -1,10 +1,18 @@
 <template>
-    <div class="container">
-        <div v-for="img in imagesCropped" :key="img" v-show="showCropped" class="imageContainer">
-            <b-img :src="img" v-show="showCropped" class="croppedImage"/>
-        </div><br>
-        
-        <clip-loader v-show="loading"></clip-loader>
+    <div class="container" @swipeleft="index -= 1" @swiperigth="index += 2">
+        <draggable v-model="imagesCropped" @start="drag=true" @end="drag=false" :options="{handle: '.imageContainer', animation: 150}">
+            <div v-for="(img, ind) in imagesCropped" :key="img" v-show="showCropped" class="imageContainer">
+                <b-img src="/static/img/cross-icon.png" class="delete-button" @click="deleteImage(ind)"/>
+                <b-img :src="img" v-show="showCropped" class="croppedImage" @click="index = ind"/>
+            </div>
+        </draggable><br>
+        <p></p>
+        <clip-loader v-show="showLoading"></clip-loader>
+
+        <v-touch    @swipeleft="index + 1 >= imagesCropped.length ? index = 0 : index++"
+                    @swiperight="index <= 0 ? index = (imagesCropped.length - 1) : index--">
+            <vue-gallery-slideshow :images="imagesCropped" :index="index" @close="index = null"></vue-gallery-slideshow>
+        </v-touch>
 
         <label class="uploadLabel" style="position: relative">
             <input multiple="multiple" type="file" accept="image/*;capture=camera" @change="onFileChanged">
@@ -15,8 +23,17 @@
 
 <script>
     /* eslint-disable */
+    // cross-icon.png
     import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
-    import { setTimeout } from 'timers';
+    import { setTimeout } from 'timers'
+    import VueGallerySlideshow from 'vue-gallery-slideshow'
+    import Vue from 'vue'
+    import draggable from 'vuedraggable'
+    // import Vue from 'vue'
+    import VueTouch from 'vue-touch'
+
+    Vue.use(VueTouch)
+
     export default {  
         data: function () {
             return {
@@ -25,13 +42,29 @@
                 imageCropped: null,
                 loading: false,
                 images: [],
-                imagesCropped: []
+                imagesCropped: [],
+                index: null,
+                imagesToUpload: 0,
+                imagesUploaded: 0
             }
         },
         components: {
-            ClipLoader
+            ClipLoader,
+            VueGallerySlideshow,
+            draggable
+        },
+        mounted () {
+            //Vue.config.silent = true // vue warns when the same images are uploaded
+        },
+        computed: {
+            showLoading () {
+                return this.imagesUploaded < this.imagesToUpload
+            }
         },
         methods: {
+            deleteImage (index) {
+                this.imagesCropped.splice(index, 1)
+            },
             onFileChangeAndShowLoading (event) {
                 this.showCropped = false
                 this.loading = true
@@ -47,7 +80,8 @@
                 setTimeout(() => {
                     this.showCropped = false
                     this.image = event.target.files[0]
-                    this.imagesCropped = []
+                    this.imagesToUpload = event.target.files.length
+                    this.imagesUploaded = 0
                     for (var i = 0; i < event.target.files.length; i++) {
                         this.addNewImage(event.target.files[i])
                     }                    
@@ -60,6 +94,7 @@
                     self.imagesCropped.push(reader.result)
                     self.loading = false
                     self.showCropped = true
+                    self.imagesUploaded++
                 })
                 if (this.image) {
                     if (/\.(jpe?g|png|gif)$/i.test(this.image.name)) {
@@ -84,6 +119,7 @@
         margin-bottom: 10px;
         margin-right: 5px;
         margin-left: 5px;
+        position: relative;
     }
     .croppedImage {
         height: 100%;
@@ -97,5 +133,33 @@
     label.uploadLabel span {
         position: relative;
         margin-top: 10px;
+    }
+    .imageContainer .delete-button {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        position: absolute;
+        top: 10%;
+        left: 90%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        display: none;
+    }
+    .imageContainer:hover {
+        cursor: pointer;
+    }
+    .imageContainer:hover .delete-button {
+        display: inline;
+    }
+    .modal-slideshow__container__image {
+        margin-top: 50px;
+    }
+    @media screen and (max-width: 600px) {
+        .imageContainer .delete-button {
+            display: inline;
+        }
+        .modal-slideshow__container__image {
+            margin-top: 0px;
+        }
     }
 </style>
