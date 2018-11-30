@@ -8,7 +8,7 @@
 
 .dark-theme .btn-primary {
     background-color: darkblue;
-    border-color: #214061;
+    border-color: rgb(0, 0, 90);
 }
 
 .dark-theme .card {
@@ -91,4 +91,21 @@
 
 .dark-them .step-progress__step-icon {
     color: #000000;
+}
+
+.dark-theme .dropdown-menu {
+    background-color: #1f1f1f;
+    color: #ffffff;
+}
+
+.dark-theme .datepicker th:hover {
+    background-color: #3d3d3d !important;
+}
+.dark-theme .bootstrap-datetimepicker-widget table td.day:hover, .bootstrap-datetimepicker-widget table td.hour:hover, .bootstrap-datetimepicker-widget table td.minute:hover, .bootstrap-datetimepicker-widget table td.second:hover{
+    background: #3d3d3d
+}
+
+.dark-theme .bootstrap-datetimepicker-widget.dropdown-menu:before, .bootstrap-datetimepicker-widget.dropdown-menu:before
+.dark-theme .bootstrap-datetimepicker-widget.dropdown-menu:before, .bootstrap-datetimepicker-widget.dropdown-menu:after {
+    display: none !important;
 }
