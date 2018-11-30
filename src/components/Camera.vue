@@ -66,14 +66,6 @@
                 this.$parent.playButtonSound()
                 this.imagesCropped.splice(index, 1)
             },
-            onFileChangeAndShowLoading (event) {
-                this.showCropped = false
-                this.loading = true
-                // without setTimeout the above code will be waiting for loading
-                setTimeout(() => {
-                    this.onFileChanged(event)
-                }, 1);
-            },
             onFileChanged (event) {
                 this.showCropped = false
                 this.loading = true
@@ -171,10 +163,5 @@
         .modal-slideshow__container__image {
             margin-top: 0px;
         }
-    }
-
-    .dark-theme .btn-primary {
-        background-color: darkblue;
-        border-color: #214061;
     }
 </style>

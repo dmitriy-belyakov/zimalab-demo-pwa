@@ -20,6 +20,7 @@
           <router-link class="mdl-navigation__link" to="/offlineexample" @click.native="hideMenu">Offline mode</router-link>
           <router-link class="mdl-navigation__link" to="/textpage" @click.native="hideMenu">Text Page</router-link>
           <router-link class="mdl-navigation__link" to="/purchaseaduck" @click.native="hideMenu">Purchase a duck</router-link>
+          <router-link class="mdl-navigation__link" to="/imagecrop" @click.native="hideMenu">Image crop</router-link>
         </nav>
       </div>
       <main class="mdl-layout__content">

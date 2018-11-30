@@ -8,6 +8,7 @@ import OfflineExample from '@/components/OfflineExample'
 import Workers from '@/components/Workers'
 import TextPage from '@/components/TextPage'
 import Forms from '@/components/Forms'
+import Cropper from '@/components/Cropper'
 
 Vue.use(Router)
 
@@ -53,6 +54,11 @@ export default new Router({
       path: '/purchaseaduck',
       name: 'Purchase a duck',
       component: Forms
+    },
+    {
+      path: '/imagecrop',
+      name: 'Image crop',
+      component: Cropper
     }
   ]
 })
