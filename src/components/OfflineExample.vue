@@ -23,5 +23,14 @@
     .container {
         max-width: 700px;
     }
+    
+    .dark-theme .container {
+        color: rgb(196, 195, 195);
+    }
+
+    .dark-theme .btn-primary {
+        background-color: darkblue;
+        border-color: #214061;
+    }
 </style>
 

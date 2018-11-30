@@ -246,7 +246,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .container {
         max-width: 1000px;
     }

@@ -1,39 +1,39 @@
 <template>
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" @click="headerClickHandler(event)">
-    <header class="mdl-layout__header">
-      <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">{{$route.name}}</span>
-        <div class="button-container" style="margin-left: auto">
-          <button class="btn btn-primary" @click="toggleSounds">{{ sounds ? 'Sound off' : 'Sound on'}}</button>
-          <button class="btn btn-primary" @click="toggleTheme">{{ darkTheme ? 'Light' : 'Dark'}}</button>
+    <div :class="theme" @click="headerClickHandler(event)">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">{{$route.name}}</span>
+          <div class="button-container" style="margin-left: auto">
+            <button class="btn btn-primary" @click="toggleSounds">{{ sounds ? 'Sound off' : 'Sound on'}}</button>
+            <button class="btn btn-primary" @click="toggleTheme">{{ darkTheme ? 'Light' : 'Dark'}}</button>
+          </div>
         </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Vue demo</span>
+        <nav class="mdl-navigation">
+          <router-link class="mdl-navigation__link" to="/" @click.native="hideMenu">QR Code</router-link>
+          <router-link class="mdl-navigation__link" to="/signature" @click.native="hideMenu">Signature</router-link>
+          <router-link class="mdl-navigation__link" to="/geotag" @click.native="hideMenu">Geotag</router-link>
+          <router-link class="mdl-navigation__link" to="/imageupload" @click.native="hideMenu">Image upload</router-link>
+          <router-link class="mdl-navigation__link" to="/workers" @click.native="hideMenu">Workers</router-link>
+          <router-link class="mdl-navigation__link" to="/offlineexample" @click.native="hideMenu">Offline mode</router-link>
+          <router-link class="mdl-navigation__link" to="/textpage" @click.native="hideMenu">Text Page</router-link>
+          <router-link class="mdl-navigation__link" to="/purchaseaduck" @click.native="hideMenu">Purchase a duck</router-link>
+        </nav>
       </div>
-    </header>
-    <div class="mdl-layout__drawer">
-      <span class="mdl-layout-title">Vue demo</span>
-      <nav class="mdl-navigation">
-        <router-link class="mdl-navigation__link" to="/" @click.native="hideMenu">QR Code</router-link>
-        <router-link class="mdl-navigation__link" to="/signature" @click.native="hideMenu">Signature</router-link>
-        <router-link class="mdl-navigation__link" to="/geotag" @click.native="hideMenu">Geotag</router-link>
-        <router-link class="mdl-navigation__link" to="/imageupload" @click.native="hideMenu">Image upload</router-link>
-        <router-link class="mdl-navigation__link" to="/workers" @click.native="hideMenu">Workers</router-link>
-        <router-link class="mdl-navigation__link" to="/offlineexample" @click.native="hideMenu">Offline mode</router-link>
-        <router-link class="mdl-navigation__link" to="/textpage" @click.native="hideMenu">Text Page</router-link>
-        <router-link class="mdl-navigation__link" to="/purchaseaduck" @click.native="hideMenu">Purchase a duck</router-link>
-      </nav>
+      <main class="mdl-layout__content">
+        <div class="page-content">
+          <offline @detected-condition="handleConnectivityChange"></offline>
+
+          <div v-show="!haveInternetConnetion" class="alert alert-warning offline" role="alert" style="margin-top: 10px;">
+              You are in offline mode
+          </div>
+
+          <router-view></router-view>
+        </div>
+      </main>
     </div>
-    <main class="mdl-layout__content">
-      <div class="page-content">
-        <offline @detected-condition="handleConnectivityChange"></offline>
-
-        <div v-show="!haveInternetConnetion" class="alert alert-warning offline" role="alert" style="margin-top: 10px;">
-            You are in offline mode
-        </div>
-
-        <router-view></router-view>
-      </div>
-    </main>
-  </div>
 </template>
 
 <script>
@@ -51,9 +51,18 @@
     data: function () {
       return {
         haveInternetConnetion: true,
-        sounds: true,
+        sounds: false,
         darkTheme: false,
         buttonSoundSrc: '/static/sounds/bubble.mp3'
+      }
+    },
+    computed: {
+      theme () {
+        if (this.darkTheme) {
+          return 'dark-theme mdl-layout mdl-js-layout mdl-layout--fixed-header'
+        } else {
+          return 'mdl-layout mdl-js-layout mdl-layout--fixed-header'
+        }
       }
     },
     methods: {
@@ -80,7 +89,7 @@
         }
       },
       headerClickHandler () {
-        if (event.offsetX <= 60 && event.offsetY < 50) {
+        if (event.offsetX <= 60 && event.offsetY < 48) {
           this.playButtonSound()
         }
       }
@@ -88,9 +97,11 @@
   }
 </script>
 
-<style>
+<style scoped>
   @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
   @import url('https://code.getmdl.io/1.2.1/material.blue-red.min.css');
+  @import url('assets/dark-theme.css');
+
   body {
     margin: 0;
   }
@@ -128,5 +139,17 @@
     width: 92%;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .mdl-layout__header-row {
+    padding-left: 50px;
+  }
+  .mdl-layout__header {
+    background-color: rgb(33,150,243);
+  }
+  @media screen and (max-width: 992px) {
+    .mdl-layout__header-row {
+      padding-left: 30px;
+    }
   }
 </style>

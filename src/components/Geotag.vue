@@ -202,10 +202,11 @@
     }
 </script>
 
-<style>
+<style scoped>
     .card {
         margin-top: 10px;
     }
+
     .coordinates {
         margin-top: 10px;
     }

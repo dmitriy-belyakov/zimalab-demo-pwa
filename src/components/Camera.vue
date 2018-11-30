@@ -107,12 +107,13 @@
     }
 </script>
 
-<style>
+<style scoped>
     .container {
         height: 100%;
         max-width: 600px;
         margin-top: 10px;
     }
+    
     .imageContainer {
         height: 150px;
         width: 150px;
@@ -122,19 +123,23 @@
         margin-left: 5px;
         position: relative;
     }
+    
     .croppedImage {
         height: 100%;
         width: 100%;
         object-fit: cover;
     }
+    
     label.uploadLabel input[type="file"] {
         position: absolute;
         top: -9000px;
     }
+    
     label.uploadLabel span {
         position: relative;
         margin-top: 10px;
     }
+    
     .imageContainer .delete-button {
         width: 20px;
         height: 20px;
@@ -146,15 +151,19 @@
         -ms-transform: translate(-50%, -50%);
         display: none;
     }
+    
     .imageContainer:hover {
         cursor: pointer;
     }
+    
     .imageContainer:hover .delete-button {
         display: inline;
     }
+    
     .modal-slideshow__container__image {
         margin-top: 50px;
     }
+    
     @media screen and (max-width: 600px) {
         .imageContainer .delete-button {
             display: inline;
@@ -162,5 +171,10 @@
         .modal-slideshow__container__image {
             margin-top: 0px;
         }
+    }
+
+    .dark-theme .btn-primary {
+        background-color: darkblue;
+        border-color: #214061;
     }
 </style>
