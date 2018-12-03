@@ -27,14 +27,23 @@
                 {{ cropImg ? 'Take another crop' : 'Crop'}}
         </button><br v-if="imgSrc != ''">
 
-        <div :class="croppedImageContainerClass">
-            <img v-if="cropImg" :src="cropImg" alt="Cropped Image" class="cropped-image"/>
-        </div>
+        <br v-if="!squareCrop && cropImg">  
+        <img v-if="!squareCrop && cropImg" :src="cropImg" class="user-cropped-image"/>
+
+        <div v-if="squareCrop" :class="croppedImageContainerClass">
+            <img v-if="squareCrop && cropImg" :src="cropImg" alt="Cropped Image" class="cropped-image"/>
+        </div><br>
 
         <div v-if="cropImg" class="thumbnail-button-container"><br>
-            <img :src="cropImg" class="thumbnail-button big" @click="addCrop(500, 500)">
-            <img :src="cropImg" class="thumbnail-button middle" @click="addCrop(250, 250)">
-            <img :src="cropImg" class="thumbnail-button small" @click="addCrop(100, 100)">
+            <div class="thumbnail-image-container big">
+                <img :src="cropImg" class="thumbnail-button" @click="addCrop(500, 500)">
+            </div>
+            <div class="thumbnail-image-container middle">
+                <img :src="cropImg" class="thumbnail-button" @click="addCrop(250, 250)">
+            </div>
+            <div class="thumbnail-image-container small">
+                <img :src="cropImg" class="thumbnail-button" @click="addCrop(100, 100)">
+            </div>
         </div>
     </div>
 </template>
@@ -51,7 +60,8 @@
                 croppedImageSize: {
                     width: 335,
                     height: 335
-                }
+                },
+                squareCrop: false,
             }
         },
         components: {
@@ -59,7 +69,7 @@
         },
         computed: {
             croppedImageContainerClass () {
-                if (this.cropImg) {
+                if (this.cropImg && this.croppedImageSize.width != 335) {
                     return 'image-container ' + 'crop' + this.croppedImageSize.width + '-' + this.croppedImageSize.height
                 } else {
                     return 'image-container'
@@ -74,17 +84,23 @@
                     this.cropImg = ''
                 }
 
+                if (this.squareCrop) {
+                    this.squareCrop = false
+                }
+
                 if (!file.type.includes('image/')) {
                     alert('Please select an image file')
                     return
                 }
 
+                var self = this
+
                 if (typeof FileReader === 'function') {
                     const reader = new FileReader()
                     reader.onload = (event) => {
-                        this.imgSrc = event.target.result
+                        self.imgSrc = event.target.result
                         // rebuild cropperjs with the updated source
-                        this.$refs.cropper.replace(event.target.result)
+                        self.$refs.cropper.replace(event.target.result)
                     }
                     reader.readAsDataURL(file)
                 } else {
@@ -95,6 +111,8 @@
                 if (this.cropImg) {
                     this.imgSrc = ''
                     this.cropImg = ''
+                    this.croppedImageSize.width = 335
+                    this.croppedImageSize.height = 335
                 } else {
                     // get image data for post processing, e.g. upload or setting image src
                     this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
@@ -103,6 +121,7 @@
             addCrop (width, height) {
                 this.croppedImageSize.width = width
                 this.croppedImageSize.height = height
+                this.squareCrop = true
             }
         }
     }
@@ -112,6 +131,11 @@
 <style scoped>
     .crop-button {
         margin-top: 10px;
+    }
+
+    .user-cropped-image {
+        width: 300px;
+        height: auto;
     }    
     
     .cropped-image {
@@ -173,28 +197,34 @@
         width: 335px;
         margin-left: auto;
         margin-right: auto;
+        display: inline-flex;
+        margin-top: 10px;
+    }
+    
+    .thumbnail-image-container {
+        margin-right: 25px;
+        margin-left: 25px;
+        cursor: pointer;
+    }
+
+    .thumbnail-image-container.big {
+        width: 80px;
+        height: 80px;
+    }
+
+    .thumbnail-image-container.middle {
+        width: 50px;
+        height: 50px;
+    }
+
+    .thumbnail-image-container.small {
+        width: 30px;
+        height: 30px;
     }
 
     .thumbnail-button {
-        margin-right: 25px;
-        margin-left: 25px;
-    }
-
-    .thumbnail-button.small {
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-    }
-
-    .thumbnail-button.middle {
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
-    }
-
-    .thumbnail-button.big {
-        width: 80px;
-        height: 80px;
-        cursor: pointer;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
     }
 </style>
