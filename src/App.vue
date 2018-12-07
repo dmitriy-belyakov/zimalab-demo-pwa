@@ -40,7 +40,8 @@
 <script>
   /* eslint-disable no-unused-vars */
   import offline from 'v-offline'
-  import { QrcodeReader } from 'vue-qrcode-reader'  
+  import { QrcodeReader } from 'vue-qrcode-reader'
+  import Vue from 'vue'
 
   require('material-design-lite')
 
@@ -54,7 +55,8 @@
         haveInternetConnetion: true,
         sounds: false,
         darkTheme: false,
-        buttonSoundSrc: '/static/sounds/bubble.mp3'
+        buttonSoundSrc: '/static/sounds/bubble.mp3',
+        audio: null
       }
     },
     computed: {
@@ -65,6 +67,11 @@
           return 'mdl-layout mdl-js-layout mdl-layout--fixed-header'
         }
       }
+    },
+    mounted () {
+      Vue.config.silent = true 
+      this.audio = new Audio(this.buttonSoundSrc)
+      this.audio.load()
     },
     methods: {
       hideMenu: function () {
@@ -85,8 +92,8 @@
       },
       playButtonSound () {
         if (this.sounds) {
-          var audio = new Audio(this.buttonSoundSrc);
-          audio.play();
+          //var audio = new Audio(this.buttonSoundSrc);
+          this.audio.play();
         }
       },
       headerClickHandler () {
