@@ -1,32 +1,86 @@
 <template>
     <div class="container">
         <h5>Workers</h5>
-        <b-row>
-            <b-col md="6">
-                <b-form-input v-model="filter" placeholder="Type to Search" />
-            </b-col>
-            <b-col md="6">
-                <b-form-group horizontal label="Per page" class="mb-0">
-                    <b-form-select :options="pageOptions" v-model="perPage" />
-                </b-form-group>
-            </b-col>
-        </b-row><br>
-        <b-table v-if="workers" responsive bordered hover :items="workers" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
-        </b-table>
-        <b-row>
-            <b-col md="8">
-                <b-pagination size="md" :total-rows="totalRows" v-model="currentPage" :per-page="perPage"></b-pagination>
-            </b-col>
-            <b-col md="4">
-                <p>Total amount of workers: {{totalRows}}</p>
-            </b-col>
-        </b-row>
+        
+        <div v-show="!showLoading && !cannotLoadDB">
+            <b-row>
+                <b-col md="6">
+                    <b-form-input v-model="filter" placeholder="Type to Search" />
+                </b-col>
+
+                <b-col md="6">
+                    <b-form-group horizontal label="Per page" class="mb-0">
+                        <b-form-select :options="pageOptions" v-model="perPage" />
+                    </b-form-group>
+                </b-col>
+            </b-row><br>
+            
+            <b-table v-if="workers" responsive bordered hover :items="workers" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
+                <template slot="delete" slot-scope="row">
+                    <b-button @click.stop="deleteWorker(row.item._id, row.item)" class="btn btn-danger">
+                        delete
+                    </b-button>
+                </template>
+            </b-table>
+            
+            <b-row>
+                <b-col md="8">
+                    <b-pagination size="md" :total-rows="totalRows" v-model="currentPage" :per-page="perPage"></b-pagination>
+                </b-col>
+                <b-col md="4">
+                    <p>Total amount of workers: {{totalRows}}</p>
+                </b-col>
+            </b-row>
+            
+            <b-button v-b-modal.modalAddWorker variant="primary">
+                Add new worker
+            </b-button>
+
+            <b-modal id="modalAddWorker" @shown="marginTopFix" @ok="handleOk" ref="modal" title="Add worker">
+                <b-form @submit.stop.prevent="addNewWorker">
+                    <div class="form-container">
+                        <b-form-group>
+                            <b-form-input placeholder="Name" v-model.trim="newWorker.name">
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group>
+                            <b-form-input placeholder="Position" v-model.trim="newWorker.position">
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group>
+                            <b-form-input placeholder="Office" v-model.trim="newWorker.office">
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group>
+                            <b-form-input type="number" placeholder="Age" v-model.trim="newWorker.age">
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group>
+                            <b-form-input type="number" placeholder="Salary" v-model.trim="newWorker.salary">
+                            </b-form-input>
+                        </b-form-group>
+                    </div>
+                </b-form>
+            </b-modal>
+        </div>
+
+        <clip-loader v-show="showLoading"></clip-loader>
+
+        <p v-show="showSuccesAdeddWorkerMessage"> Succesfully added new worker </p>
+
+        <p v-show="cannotLoadDB"> Oops... looks like we cannot load db. Make sure you have internet connection </p>
     </div>
 </template>
 
 <script>
     /* eslint-disable */
-    import axios from 'axios';
+    import axios from 'axios'
+    import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
+
     const workerss = [{
             name: 'John Oliver',
             position: 'manager',
@@ -223,15 +277,33 @@
                     { key: 'office', sortable: true },
                     { key: 'age', sortable: true },
                     // { key: 'start_date', sortable: true },
-                    { key: 'salary', sortable: true }
+                    { key: 'salary', sortable: true },
+                    { key: 'delete', sortable: false }
                 ],
                 pageOptions: [ 5, 10, 15 ],
                 filter: null,
                 currentPage: 1,
                 perPage: 10,
                 db: null,
-                dbUrl: 'workers-e9cd'
+                dbUrl: 'workers-e9cd',
+                newWorker: {
+                    name: '',
+                    position: '',
+                    office: '',
+                    age: '',
+                    salary: ''
+                },
+                deleteWorkerId: null,
+                deleteWorker_Id: null,
+                showAddWorkerForm: false,
+                showDeleteWorkerForm: false,
+                showLoading: true,
+                cannotLoadDB: false,
+                showSuccesAdeddWorkerMessage: false
             }
+        },
+        components: {
+            ClipLoader,
         },
         mounted () {
             axios
@@ -242,17 +314,88 @@
                 })
                 .then(response => {
                     this.workers = response.data
+                    this.showLoading = false
                 })
-            // var i = 1
-            // for (var worker in this.workers) {
-            //     this.workers[worker].id = i
-            //     i++
-            //     console.log(worker.id)
-            // }
+                .catch(response => {
+                    console.log(response)
+                    this.showLoading = false
+                    this.cannotLoadDB = true
+                })
         },
         computed: {
             totalRows: function () {
                 return this.workers ? this.workers.length : 0
+            }
+        },
+        methods: {
+            addNewWorker () {
+                axios
+                    .post('https://' + this.dbUrl + '.restdb.io/rest/workers',
+                        this.newWorker,
+                        {
+                            headers: {
+                                'x-apikey': '5c0913455b925e3d4c9afa30'
+                            }
+                        }
+                    )
+                    .then(response => {
+                        console.log(response)
+                        this.workers.push({
+                            name: this.newWorker.name,
+                            office: this.newWorker.office,
+                            position: this.newWorker.position,
+                            age: this.newWorker.age,
+                            salary: this.newWorker.salary
+                        });
+                        this.newWorker.name = ''
+                        this.newWorker.office = ''
+                        this.newWorker.position = ''
+                        this.newWorker.age = ''
+                        this.newWorker.salary = ''
+                    })
+                    .catch(response => {
+                        console.log(response)
+                        this.newWorker.name = ''
+                        this.newWorker.office = ''
+                        this.newWorker.position = ''
+                        this.newWorker.age = ''
+                        this.newWorker.salary = ''
+                    })                
+            },
+            deleteWorker (id, item) {
+                axios
+                    .delete('https://' + this.dbUrl + '.restdb.io/rest/workers/' + id,
+                        {
+                            headers: {
+                                'x-apikey': '5c0913455b925e3d4c9afa30'
+                            }
+                        }
+                    )
+                    .then(response => {
+                        this.deleteWorkerId = null
+                        this.workers.splice(this.workers.indexOf(item), 1)
+                        console.log(response)
+                    })
+                    .catch(response => {
+                        this.deleteWorkerId = null
+                        console.log(response)
+                    })
+            },
+            marginTopFix () {
+                document.getElementsByClassName('modal-dialog')[0].style.marginTop = "100px"
+            },
+            handleOk (event) {
+                event.preventDefault()
+                if (this.newWorker.name && this.newWorker.position && this.newWorker.office && this.newWorker.age && this.newWorker.salary) {
+                    this.addNewWorker()
+                    this.$refs.modal.hide()
+                    this.showSuccesAdeddWorkerMessage = true
+                    setTimeout(() => {
+                        this.showSuccesAdeddWorkerMessage = false
+                    }, 5000);
+                } else {
+                    alert('All fields are required')
+                }
             }
         }
     }
