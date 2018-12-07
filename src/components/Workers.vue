@@ -11,7 +11,7 @@
                 </b-form-group>
             </b-col>
         </b-row><br>
-        <b-table responsive bordered hover :items="workers" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
+        <b-table v-if="workers" responsive bordered hover :items="workers" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
         </b-table>
         <b-row>
             <b-col md="8">
@@ -26,7 +26,8 @@
 
 <script>
     /* eslint-disable */
-    const workers = [{
+    import axios from 'axios';
+    const workerss = [{
             name: 'John Oliver',
             position: 'manager',
             office: 'New York',
@@ -214,7 +215,7 @@
     export default {
         data: function () {
             return {
-                workers: workers,
+                workers: null,
                 fields: [
                     { key: 'id', sortable: true},
                     { key: 'name', sortable: true },
@@ -227,20 +228,31 @@
                 pageOptions: [ 5, 10, 15 ],
                 filter: null,
                 currentPage: 1,
-                perPage: 10
+                perPage: 10,
+                db: null,
+                dbUrl: 'workers-e9cd'
             }
         },
         mounted () {
-            var i = 1
-            for (var worker in this.workers) {
-                this.workers[worker].id = i
-                i++
-                console.log(worker.id)
-            }
+            axios
+                .get('https://' + this.dbUrl + '.restdb.io/rest/workers', {
+                    headers: {
+                        'x-apikey': '5c0913455b925e3d4c9afa30'
+                    }
+                })
+                .then(response => {
+                    this.workers = response.data
+                })
+            // var i = 1
+            // for (var worker in this.workers) {
+            //     this.workers[worker].id = i
+            //     i++
+            //     console.log(worker.id)
+            // }
         },
         computed: {
             totalRows: function () {
-                return this.workers.length
+                return this.workers ? this.workers.length : 0
             }
         }
     }
