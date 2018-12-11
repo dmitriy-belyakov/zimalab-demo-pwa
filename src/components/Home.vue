@@ -1,8 +1,11 @@
 <template>
     <div class="container">
         <div class="link-container">
-            <router-link v-for="link in links" :key="link" :to="link.path">
-                <b-button variant="outline-primary" class="router-link-button" size="lg">
+            <router-link v-for="(link, index) in links" :key="link" :to="link.path">
+                <b-button   v-if="link.name != 'Home'"
+                            variant="outline-primary"
+                            :class="'router-link-button' + ((links.length == index + 1 && links.length / 2 != 0) ? ' last' : '')"
+                            size="lg">
                     {{ link.name }}
                 </b-button>
             </router-link>
@@ -32,10 +35,20 @@
 <style scoped>
     .container {
         max-width: 600px;
-        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+
+    .link-container .router-link-button {
+        margin-bottom: 10px;
+        margin-left: 5px;
+        margin-right: 5px;
     }
     
-    .link-container .router-link-button {
-        margin: 20px;
+    .link-container button {
+        width: 45%;
+    }
+
+    .link-container button.last {
+        width: calc(90% + 10px);
     }
 </style>
