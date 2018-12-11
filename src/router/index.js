@@ -9,6 +9,7 @@ import Workers from '@/components/Workers'
 import TextPage from '@/components/TextPage'
 import Forms from '@/components/Forms'
 import Cropper from '@/components/Cropper'
+import Home from '@/components/Home'
 
 Vue.use(Router)
 
@@ -17,6 +18,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/qr',
       name: 'QR Code',
       component: HomeView
     },

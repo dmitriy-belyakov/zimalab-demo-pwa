@@ -12,7 +12,8 @@
       <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Vue demo</span>
         <nav class="mdl-navigation">
-          <router-link class="mdl-navigation__link" to="/" @click.native="hideMenu">QR Code</router-link>
+          <router-link class="mdl-navigation__link" to="/" @click.native="hideMenu">Home</router-link>
+          <router-link class="mdl-navigation__link" to="/qr" @click.native="hideMenu">QR Code</router-link>
           <router-link class="mdl-navigation__link" to="/signature" @click.native="hideMenu">Signature</router-link>
           <router-link class="mdl-navigation__link" to="/geotag" @click.native="hideMenu">Geotag</router-link>
           <router-link class="mdl-navigation__link" to="/imageupload" @click.native="hideMenu">Image upload</router-link>
