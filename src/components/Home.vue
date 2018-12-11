@@ -34,6 +34,7 @@
         max-width: 600px;
         padding-bottom: 10px;
     }
+    
     .link-container .router-link-button {
         margin: 20px;
     }
