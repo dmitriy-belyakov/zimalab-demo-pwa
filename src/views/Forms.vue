@@ -543,6 +543,7 @@
                     product: this.productSelected.name,
                     productImage: this.productSelected.img,
                     productCost: this.productSelected.cost,
+                    name: this.form.name,
                     quantity: this.form.quantity,
                     country: this.form.country,
                     countryState: this.form.countryState,
