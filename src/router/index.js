@@ -6,7 +6,6 @@ import Geotag from '@/views/Geotag'
 import Camera from '@/views/Camera'
 import OfflineExample from '@/views/OfflineExample'
 import Workers from '@/views/Workers'
-import TextPage from '@/views/TextPage'
 import Forms from '@/views/Forms'
 import Cropper from '@/views/Cropper'
 import Home from '@/views/Home'
@@ -50,11 +49,6 @@ export default new Router({
       path: '/workers',
       name: 'Workers',
       component: Workers
-    },
-    {
-      path: '/textpage',
-      name: 'Text page',
-      component: TextPage
     },
     {
       path: '/purchaseaduck',
