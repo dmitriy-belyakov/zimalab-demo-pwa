@@ -5,7 +5,8 @@
                 <b-button   v-if="link.name != 'Home'"
                             variant="outline-primary"
                             :class="'router-link-button' + ((links.length == index + 1 && links.length / 2 != 0) ? ' last' : '')"
-                            size="lg">
+                            size="lg"
+                            @click="clickHandler()">
                     {{ link.name }}
                 </b-button>
             </router-link>
@@ -28,6 +29,11 @@
                     path: route.path
                 })
             })
+        },
+        methods: {
+            clickHandler () {
+                this.$parent.playButtonSound()
+            }
         }
     }
 </script>
