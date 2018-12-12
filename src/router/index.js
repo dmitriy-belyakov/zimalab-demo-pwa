@@ -9,6 +9,7 @@ import Workers from '@/views/Workers'
 import Forms from '@/views/Forms'
 import Cropper from '@/views/Cropper'
 import Home from '@/views/Home'
+import PurchaseHistory from '@/views/PurchaseHistory'
 
 Vue.use(Router)
 
@@ -59,6 +60,11 @@ export default new Router({
       path: '/imagecrop',
       name: 'Image crop',
       component: Cropper
+    },
+    {
+      path: '/purchasehistory',
+      name: 'Purchase history',
+      component: PurchaseHistory
     }
   ]
 })
