@@ -1,10 +1,16 @@
 <template>
     <div class="container">
+        <h4>
+            Zimalab PWA demo
+        </h4>
+        <p>
+            Demo is based on Vue.js and works online/offline. Feel free to try all the features below.
+        </p>
         <div class="link-container">
             <router-link v-for="(link, index) in links" :key="link" :to="link.path">
                 <b-button   v-if="link.name != 'Home'"
                             variant="outline-primary"
-                            :class="'router-link-button' + ((links.length == index + 1 && links.length / 2 != 0) ? ' last' : '')"
+                            :class="'router-link-button' + ((links.length == index + 1 && links.length / 2 == 0) ? ' last' : '')"
                             size="lg"
                             @click="clickHandler()">
                     {{ link.name }}
