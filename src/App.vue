@@ -9,11 +9,11 @@
         </div>
       </div>
     </header>
-    <div class="mdl-layout__drawer">
+    <div class="mdl-layout__drawer toggled">
       <span class="mdl-layout-title">Vue demo</span>
       <nav class="mdl-navigation">
-        <router-link class="mdl-navigation__link" to="/" @click.native="hideMenu">Home</router-link>
-        <router-link class="mdl-navigation__link" to="/qr" @click.native="hideMenu">QR Code</router-link>
+        <!-- <router-link class="mdl-navigation__link" to="/" @click.native="hideMenu">Home</router-link>
+        <router-link class="mdl-navigation__link" data-toggle="collapse"  to="/qr" @click.native="hideMenu">QR Code</router-link>
         <router-link class="mdl-navigation__link" to="/signature" @click.native="hideMenu">Signature</router-link>
         <router-link class="mdl-navigation__link" to="/geotag" @click.native="hideMenu">Geotag</router-link>
         <router-link class="mdl-navigation__link" to="/imageupload" @click.native="hideMenu">Image upload</router-link>
@@ -21,7 +21,8 @@
         <router-link class="mdl-navigation__link" to="/offlineexample" @click.native="hideMenu">Offline mode</router-link>
         <router-link class="mdl-navigation__link" to="/textpage" @click.native="hideMenu">Text Page</router-link>
         <router-link class="mdl-navigation__link" to="/purchaseaduck" @click.native="hideMenu">Purchase a duck</router-link>
-        <router-link class="mdl-navigation__link" to="/imagecrop" @click.native="hideMenu">Image crop</router-link>
+        <router-link class="mdl-navigation__link" to="/imagecrop" @click.native="hideMenu">Image crop</router-link> -->
+        <menu-links autoHideDrawer="true"/>
       </nav>
     </div>
     <main class="mdl-layout__content">
@@ -43,13 +44,15 @@
   import offline from 'v-offline'
   import { QrcodeReader } from 'vue-qrcode-reader'
   import Vue from 'vue'
+  import menuLinks from '@/components/menuLinks.vue'
 
   require('material-design-lite')
 
   export default {
     name: 'app',
     components: {
-      offline
+      offline,
+      menuLinks
     },
     data: function () {
       return {
