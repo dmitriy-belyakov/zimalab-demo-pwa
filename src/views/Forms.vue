@@ -539,6 +539,21 @@
                 event.preventDefault() // without it page reloads on submit
                 this.formStep = 4 // jumps to 4 after 2 for the step-progress' fourth step be done
                 this.$parent.playButtonSound()
+                this.$store.commit('addPurchase', {
+                    product: this.productSelected.name,
+                    productImage: this.productSelected.img,
+                    productCost: this.productSelected.cost,
+                    quantity: this.form.quantity,
+                    country: this.form.country,
+                    countryState: this.form.countryState,
+                    city: this.form.city,
+                    adress: this.form.adress,
+                    adress2: this.form.adress2,
+                    email: this.form.email,
+                    cardNumber: this.form.cardNumber,
+                    cardCVS: this.form.cardCVS,
+                    cardValidThru: this.form.cardValidThru
+                })
             },
             resetFormData () {
                 this.form.name = ''
