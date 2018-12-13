@@ -10,7 +10,7 @@
             <router-link v-for="(link, index) in links" :key="link" :to="link.path">
                 <b-button   v-if="link.name != 'Home'"
                             variant="outline-primary"
-                            :class="'router-link-button' + ((links.length == index + 1 && links.length / 2 == 0) ? ' last' : '')"
+                            :class="'router-link-button' + ((linksLength == index + 1 && linksLengthEven) ? ' last' : '')"
                             size="lg"
                             @click="clickHandler()">
                     {{ link.name }}
@@ -35,6 +35,14 @@
                     path: route.path
                 })
             })
+        },
+        computed: {
+            linksLength () {
+                return this.links.length
+            },
+            linksLengthEven () {
+                return this.linksLength % 2 == 0
+            }
         },
         methods: {
             clickHandler () {
