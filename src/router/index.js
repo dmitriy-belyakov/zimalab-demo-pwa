@@ -42,6 +42,11 @@ export default new Router({
       component: Camera
     },
     {
+      path: '/imagecrop',
+      name: 'Image crop',
+      component: Cropper
+    },
+    {
       path: '/offlineexample',
       name: 'Offline mode',
       component: OfflineExample
@@ -55,11 +60,6 @@ export default new Router({
       path: '/purchaseaduck',
       name: 'Purchase a duck',
       component: Forms
-    },
-    {
-      path: '/imagecrop',
-      name: 'Image crop',
-      component: Cropper
     },
     {
       path: '/purchasehistory',
