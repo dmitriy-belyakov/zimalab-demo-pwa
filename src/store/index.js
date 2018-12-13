@@ -7,7 +7,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        purchaseHistory: []
+        purchaseHistory: [],
+        soundsOn: false,
+        darkMode: false,
     },
     mutations: {
         addPurchase (state, payload) {
