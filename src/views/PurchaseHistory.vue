@@ -20,8 +20,8 @@
             <b>Country: </b> {{ item.country }}<br>
             <b>Country state: </b> {{ item.countryState }}<br>
             <b>City: </b> {{ item.city }}<br>
-            <b>Adress: </b> {{ item.adress }}<br>
-            <b>Adress2: </b> {{ item.adress2 }}<br><br>
+            <b v-if="item.adress">Adress: </b> {{ item.adress }}<br>
+            <b v-if="item.adress2">Adress2: </b> {{ item.adress2 }}<br><br>
             <b>Email: </b> {{ item.email }}<br>
             <b>Card number: </b> {{ item.cardNumber }}<br>
             <b>Card valid thru: </b> {{ item.cardValidThru }}<br>
