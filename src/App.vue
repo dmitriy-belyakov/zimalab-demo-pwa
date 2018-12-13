@@ -4,8 +4,8 @@
       <div class="mdl-layout__header-row">
         <span class="mdl-layout-title">{{$route.name}}</span>
         <div class="button-container" style="margin-left: auto">
-          <button class="btn btn-primary" @click="toggleSounds">{{ sounds ? 'Sound off' : 'Sound on'}}</button>
-          <button class="btn btn-primary" @click="toggleTheme">{{ darkTheme ? 'Light' : 'Dark'}}</button>
+          <button class="btn btn-primary" @click="toggleSounds">{{ soundsOn ? 'Sound off' : 'Sound on'}}</button>
+          <button class="btn btn-primary" @click="toggleTheme">{{ darkMode ? 'Light' : 'Dark'}}</button>
         </div>
       </div>
     </header>
@@ -55,11 +55,17 @@
     },
     computed: {
       theme () {
-        if (this.darkTheme) {
+        if (this.$store.state.darkMode) {
           return 'dark-theme mdl-layout mdl-js-layout mdl-layout--fixed-header'
         } else {
           return 'mdl-layout mdl-js-layout mdl-layout--fixed-header'
         }
+      },
+      soundsOn () {
+        return this.$store.state.soundsOn
+      },
+      darkMode () {
+        return this.$store.state.darkMode
       }
     },
     mounted () {
@@ -77,12 +83,14 @@
         this.haveInternetConnetion = status
       },
       toggleSounds () {
-        this.sounds = !this.sounds
+        // this.sounds = !this.sounds
+        this.$store.commit('toggleSounds')
         this.playButtonSound()
       },
       toggleTheme () {
         this.playButtonSound()
-        this.darkTheme = !this.darkTheme
+        this.$store.commit('toggleDarkMode')
+        // this.darkTheme = !this.darkTheme
       },
       playButtonSound () {
         if (this.sounds) {
