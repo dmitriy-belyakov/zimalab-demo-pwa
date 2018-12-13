@@ -17,6 +17,12 @@ export default new Vuex.Store({
         },
         clear (state) {
             state.purchaseHistory = []
+        },
+        toggleSounds (state) {
+            state.soundsOn = !state.soundsOn
+        },
+        toggleDarkMode (state) {
+            state.darkMode = !state.darkMode
         }
     },
     plugins: [createPersistedState()]
