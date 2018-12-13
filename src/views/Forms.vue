@@ -46,9 +46,14 @@
 
             <button class="btn btn-primary"
                     @click="backToProductPage()"
-                    style="margin-top: 20px; margin-bottom: 20px;">
+                    style="margin-top: 20px; width: calc(90% + 10px)">
                     Choose another product
             </button>
+            <router-link to=/purchasehistory>
+                <b-button variant="primary" style="margin-top: 20px; margin-bottom: 20px; width: calc(90% + 10px)">
+                    Purchase history
+                </b-button>
+            </router-link>
         </div>
 
         <!-- Form step 1 -->
