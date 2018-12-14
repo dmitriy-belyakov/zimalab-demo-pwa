@@ -4,7 +4,7 @@
       <div class="mdl-layout__header-row">
         <span class="mdl-layout-title">{{$route.name}}</span>
         <div class="button-container" style="margin-left: auto">
-          <button class="btn btn-primary btn-sm icon-btn" @click="pageRefresh"><i class="material-icons">sync</i></button>
+          <button class="btn btn-primary btn-sm icon-btn" @click="pageRefresh" :disabled="!haveInternetConnetion"><i class="material-icons">sync</i></button>
           <button class="btn btn-primary btn-sm icon-btn" @click="toggleSounds"><i class="material-icons">{{ soundsOn ? 'volume_off' : 'volume_up'}}</i></button>
           <button class="btn btn-primary btn-sm icon-btn" @click="toggleTheme"><i class="material-icons">{{ darkMode ? 'brightness_5' : 'brightness_3'}}</i></button>
         </div>
