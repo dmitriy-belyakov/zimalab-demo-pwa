@@ -1,9 +1,13 @@
 <!--suppress ALL -->
 <template>
     <div class="container">
-        <div class="mdl-grid">
+        <div v-if="errorMsg">
+            <p>{{ errorMsg }}</p>
+        </div>
+        <div v-else class="mdl-grid">
             <div class="mdl-cell mdl-cell--3-col mdl-cell mdl-cell--1-col-tablet mdl-cell--hide-phone"></div>
             <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-phone">
+                <p v-if="showQRCodeReader">Scan QR code</p>
                 <qrcode-reader v-if="showQRCodeReader" @decode="onDecode" @init="onInit"></qrcode-reader>
                 <div v-show="decodeString !== ''">
                     <p class="decoded-string">{{decodeString}}</p>
@@ -25,7 +29,9 @@
         data: function () {
             return {
                 decodeString: '',
-                showQRCodeReader: true
+                showQRCodeReader: true,
+                hasCamera: true,
+                errorMsg: '',
             }
         },
         components: {QrcodeReader},
@@ -53,12 +59,15 @@
             async onInit (promise) {
                 try {
                     await promise
+                    this.errorMsg = ''
                 } catch (error) {
                     if (error.name === 'NotAllowedError') {
                         this.error = "ERROR: you need to grant camera access permisson"
+                        this.errorMsg = 'You need to grant camera access permisson'
                     } else if (error.name === 'NotFoundError') {
                         this.error = "ERROR: no camera on this device"
                         console.log('no camera on this device')
+                        this.errorMsg = "Oops... looks like you don't have a camera on your device :("
                     } else if (error.name === 'NotSupportedError') {
                         this.error = "ERROR: secure context required (HTTPS, localhost)"
                     } else if (error.name === 'NotReadableError') {
@@ -79,6 +88,10 @@
     }
 </script>
 <style>
+    .container {
+        padding-top: 10px;
+    }
+
     .decoded-string {
         font-size: 20px;
     }
