@@ -1,6 +1,10 @@
 <template>
     <div class="container">
-        <div class="alert alert-warning" role="alert" style="margin-top: 10px;">
+        <!-- This alert showing only when user is online, otherwise this alert shows in App.vue -->
+        <div    v-show="$parent.haveInternetConnetion" 
+                class="alert alert-warning"
+                role="alert"
+                style="margin-top: 10px;">
             You are in offline mode
         </div>
         <h5>This page is an example of app working offline</h5>
