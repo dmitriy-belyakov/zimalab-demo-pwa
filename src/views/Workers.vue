@@ -317,9 +317,10 @@
                     this.showLoading = false
                 })
                 .catch(response => {
-                    console.log(response)
+                    console.log('err: ' + response)
                     this.showLoading = false
                     this.cannotLoadDB = true
+
                 })
         },
         computed: {
