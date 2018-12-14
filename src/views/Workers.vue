@@ -404,5 +404,7 @@
 <style scoped>
     .container {
         max-width: 1000px;
+        padding-top: 10px;
+        margin-bottom: 10px;
     }
 </style>
