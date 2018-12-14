@@ -4,8 +4,9 @@
       <div class="mdl-layout__header-row">
         <span class="mdl-layout-title">{{$route.name}}</span>
         <div class="button-container" style="margin-left: auto">
-          <button class="btn btn-primary" @click="toggleSounds">{{ soundsOn ? 'Sound off' : 'Sound on'}}</button>
-          <button class="btn btn-primary" @click="toggleTheme">{{ darkMode ? 'Light' : 'Dark'}}</button>
+          <button class="btn btn-primary btn-sm icon-btn" @click="pageRefresh"><i class="material-icons">sync</i></button>
+          <button class="btn btn-primary btn-sm icon-btn" @click="toggleSounds"><i class="material-icons">{{ soundsOn ? 'volume_off' : 'volume_up'}}</i></button>
+          <button class="btn btn-primary btn-sm icon-btn" @click="toggleTheme"><i class="material-icons">{{ darkMode ? 'brightness_5' : 'brightness_3'}}</i></button>
         </div>
       </div>
     </header>
@@ -93,7 +94,7 @@
         // this.darkTheme = !this.darkTheme
       },
       playButtonSound () {
-        if (this.sounds) {
+        if (this.soundsOn) {
           //var audio = new Audio(this.buttonSoundSrc);
           this.audio.play();
         }
@@ -102,6 +103,9 @@
         if (event.offsetX <= 60 && event.offsetY < 48) {
           this.playButtonSound()
         }
+      },
+      pageRefresh () {
+        location.reload()
       }
     }
   }
@@ -161,5 +165,13 @@
     .mdl-layout__header-row {
       padding-left: 30px;
     }
+  }
+
+  .icon-btn {
+    padding-top: 6%;
+  }
+
+  header {
+    padding-right: 0px;
   }
 </style>
