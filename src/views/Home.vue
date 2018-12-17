@@ -3,9 +3,11 @@
         <h4>
             Zimalab PWA demo
         </h4>
+        
         <p>
             Demo is based on Vue.js and works online/offline. Feel free to try all the features below.
         </p>
+
         <div class="link-container">
             <router-link v-for="(link, index) in links" :key="link" :to="link.path">
                 <b-button   v-if="link.name != 'Home'"
@@ -17,6 +19,12 @@
                 </b-button>
             </router-link>
         </div>
+
+        <p>
+            <br>In this application we've used next modules: vue, vue-router, vuex, vue-signature, vue-qrcode-reader, v-offline,
+            vue-spinner, vue-step-progress, vue-country-region-select, vue-bootstrap-datetimepicker, vue-the-mask,
+            vue-gallery-slideshow, vue-draggable, vue-touch and vue-cropperjs
+        </p>
     </div>
 </template>
 
