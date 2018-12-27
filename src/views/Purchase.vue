@@ -300,7 +300,7 @@
     import {mask} from 'vue-the-mask'
     import StepProgress from 'vue-step-progress'
     // main.css was edited
-    import 'vue-step-progress/dist/main.css'
+    import './../assets/main.css'
     import 'vue-country-region-select'
     import 'bootstrap/dist/css/bootstrap.css'
     import datePicker from 'vue-bootstrap-datetimepicker'
