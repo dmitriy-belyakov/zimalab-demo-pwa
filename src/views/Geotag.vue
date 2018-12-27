@@ -71,7 +71,7 @@
             </div>
 
             <div class="card-body">
-                <b-button variant="primary"  @click="getLocationByGoogle()" :disabled="!haveInternetConnetion">Show coordinates</b-button>
+                <b-button variant="primary" @click="getLocationByGoogle()" :disabled="!haveInternetConnetion">Show coordinates</b-button>
 
                 <p v-if="googleLocation.latitude && googleLocation.longitude" class="card-text coordinates">
                     Latitude: {{ googleLocation.latitude }}<br>
