@@ -18,4 +18,7 @@ npm run build
 npm run build --report
 ```
 
+## Notice
+When building apache cordova application you must change relative links from '/foo' to 'foo'.
+
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
