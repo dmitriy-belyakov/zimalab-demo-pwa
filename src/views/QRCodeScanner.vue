@@ -13,9 +13,9 @@
                     <p class="decoded-string">{{decodeString}}</p>
                     <input type="hidden" id="testing-code" :value="decodeString">
                 </div>
-                <button v-show="!isUrlAbsolute(decodeString) && decodeString != ''" v-on:click="copyTestingCode" class="btn btn-primary">Copy text</button>
+                <b-button variant="primary" v-show="!isUrlAbsolute(decodeString) && decodeString != ''" v-on:click="copyTestingCode">Copy text</b-button>
                 <a v-show="isUrlAbsolute(decodeString)" v-bind:href="decodeString" class="btn btn-primary">Open site</a><br>
-                <button @click="reScan()" v-show="!showQRCodeReader" class="btn btn-primary" style="margin-top: 20px">Make another scan</button>
+                <b-button variant="primary" @click="reScan()" v-show="!showQRCodeReader" style="margin-top: 20px">Make another scan</b-button>
             </div>
         </div>
     </div>
