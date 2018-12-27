@@ -23,13 +23,11 @@
 
 <script>
     /* eslint-disable */
-    // cross-icon.png
     import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
     import { setTimeout } from 'timers'
     import VueGallerySlideshow from 'vue-gallery-slideshow'
     import Vue from 'vue'
     import draggable from 'vuedraggable'
-    // import Vue from 'vue'
     import VueTouch from 'vue-touch'
 
     Vue.use(VueTouch)
@@ -52,9 +50,6 @@
             ClipLoader,
             VueGallerySlideshow,
             draggable
-        },
-        mounted () {
-            //Vue.config.silent = true // vue warns when the same images are uploaded
         },
         computed: {
             showLoading () {

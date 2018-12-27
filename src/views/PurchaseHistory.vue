@@ -1,8 +1,5 @@
 <template>
     <div class="container">
-        <!-- {{ purchaseHistory }} -->
-        <!-- <b-button variant="primary" @click="clear">Clear history</b-button> -->
-
         <p v-if="!purchaseHistory.length">
             Looks like you have no purchases now.
             <router-link to="/purchaseaduck">How about make one?</router-link>
@@ -38,13 +35,6 @@
                 return this.$store.state.purchaseHistory
             }
         }
-        // clears purchase history
-        // ,methods: {
-        //     clear () {
-        //         console.log('+1')
-        //         this.$store.commit('clear')
-        //     }
-        // }
     }
 </script>
 

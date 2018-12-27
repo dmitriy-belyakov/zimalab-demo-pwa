@@ -299,7 +299,6 @@
     // mask used in the input (v-mask)
     import {mask} from 'vue-the-mask'
     import StepProgress from 'vue-step-progress'
-    // main.css was edited
     import './../assets/main.css'
     import 'vue-country-region-select'
     import 'bootstrap/dist/css/bootstrap.css'
