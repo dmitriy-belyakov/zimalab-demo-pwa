@@ -28,6 +28,6 @@ npm run build --report
 ```
 
 ## Notice
-When building apache cordova application you must change relative links from '/foo' to 'foo'.
+When building apache cordova application you must change relative links from '/foo' to 'foo'. You have to do it both in .vue files and in /dist/index.html.
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
