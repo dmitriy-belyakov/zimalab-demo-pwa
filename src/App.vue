@@ -84,18 +84,15 @@
         this.haveInternetConnetion = status
       },
       toggleSounds () {
-        // this.sounds = !this.sounds
         this.$store.commit('toggleSounds')
         this.playButtonSound()
       },
       toggleTheme () {
         this.playButtonSound()
         this.$store.commit('toggleDarkMode')
-        // this.darkTheme = !this.darkTheme
       },
       playButtonSound () {
         if (this.soundsOn) {
-          //var audio = new Audio(this.buttonSoundSrc);
           this.audio.play();
         }
       },
