@@ -5,8 +5,8 @@
             <span class="btn btn-primary" @click="$parent.playButtonSound()">{{image ? 'Take another picture' : 'Take a picture'}}</span>
         </label>
         <br v-if="!imgSrc">
-
-        <div v-if="!cropImg && imgSrc" style="width: 335px; height: 335px; border: 1px solid gray; display: inline-block; border: 0px; margin-top: 10px;">
+        
+        <div v-if="!cropImg && imgSrc" class="vue-cropper-container">
             <vue-cropper
                 ref='cropper'
                 :guides="true"
@@ -21,11 +21,12 @@
             </vue-cropper>
         </div><br v-if="!cropImg && imgSrc">
 
-        <button v-if="imgSrc != ''"
+        <b-button v-if="imgSrc != ''"
                 @click="cropImage"
-                class="btn btn-primary crop-button">
+                variant="primary"
+                class="crop-button">
                 {{ cropImg ? 'Take another crop' : 'Crop'}}
-        </button><br v-if="imgSrc != ''">
+        </b-button><br v-if="imgSrc != ''">
 
         <br v-if="!squareCrop && cropImg">  
         <img v-if="!squareCrop && cropImg" :src="cropImg" class="user-cropped-image"/>
@@ -129,6 +130,10 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    .vue-cropper-container {
+        width: 335px; height: 335px; border: 1px solid gray; display: inline-block; border: 0px; margin-top: 10px;
+    }
+
     .crop-button {
         margin-top: 10px;
     }
