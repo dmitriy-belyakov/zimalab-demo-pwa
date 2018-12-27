@@ -38,6 +38,7 @@
                 return this.$store.state.purchaseHistory
             }
         }
+        // clears purchase history
         // ,methods: {
         //     clear () {
         //         console.log('+1')
