@@ -15,7 +15,7 @@
                 class="history-item text-left">
             <b>Product: </b> {{ item.product }}<br>
             <b>Total cost: </b> {{ item.productCost * item.quantity }}<br>
-            <b>Quantity: </b> {{ item.product }}<br><br>
+            <b>Quantity: </b> {{ item.quantity }}<br><br>
             <b>Name: </b> {{ item.name }}<br>
             <b>Country: </b> {{ item.country }}<br>
             <b>Country state: </b> {{ item.countryState }}<br>
