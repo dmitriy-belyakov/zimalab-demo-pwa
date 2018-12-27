@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HomeView from '@/views/HomeView'
+import QRCodeScanner from '@/views/QRCodeScanner'
 import Signature from '@/views/Signature'
 import Geotag from '@/views/Geotag'
 import Camera from '@/views/Camera'
@@ -24,7 +24,7 @@ export default new Router({
     {
       path: '/qr',
       name: 'QR Code',
-      component: HomeView
+      component: QRCodeScanner
     },
     {
       path: '/signature',
