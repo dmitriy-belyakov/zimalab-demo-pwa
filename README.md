@@ -1,6 +1,15 @@
-# qr-scanner
+# PWA Demo application
 
-> scanner qr code
+This is PWA application based on Vue.js. It has following features:
+QR Code scanner
+Image upload and cropping
+Forms (purchase a duck) with history of what you submitted
+Signature
+Working with remote database
+Geolocation with showing it on google maps
+Offline mode support
+Sound on button click
+Dark mode
 
 ## Build Setup
 
