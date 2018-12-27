@@ -6,7 +6,7 @@ import Geotag from '@/views/Geotag'
 import Camera from '@/views/Camera'
 import OfflineExample from '@/views/OfflineExample'
 import Workers from '@/views/Workers'
-import Forms from '@/views/Forms'
+import Purchase from '@/views/Purchase'
 import Cropper from '@/views/Cropper'
 import Home from '@/views/Home'
 import PurchaseHistory from '@/views/PurchaseHistory'
@@ -59,7 +59,7 @@ export default new Router({
     {
       path: '/purchaseaduck',
       name: 'Purchase a duck',
-      component: Forms
+      component: Purchase
     },
     {
       path: '/purchasehistory',
