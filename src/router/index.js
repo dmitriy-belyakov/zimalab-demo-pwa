@@ -14,6 +14,7 @@ import PurchaseHistory from '@/views/PurchaseHistory'
 Vue.use(Router)
 
 export default new Router({
+  // notice that history mode isn't supported when building for apache cordova (use hash mode instead)
   mode: 'history',
   routes: [
     {
