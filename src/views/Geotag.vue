@@ -9,22 +9,21 @@
             </div>
 
             <div class="card-body">
-                <button @click="getLocationByNavigatorGeolocation" class="btn btn-primary">Show coordinates</button>
+                <b-button variant="primary" @click="getLocationByNavigatorGeolocation">Show coordinates</b-button>
                 
                 <p v-if="navigatorLocation.latitude && navigatorLocation.longitude" class="card-text coordinates">
                     Latitude: {{ navigatorLocation.latitude }}<br>
                     Longitude: {{ navigatorLocation.longitude }}
                 </p>
 
-                <button
+                <b-button variant="primary" 
                     @click="navigatorLocation.showOnMap ?
                         hideMapNavigator() :
                         initGoogleMap(navigatorLocation, 'navigatorLocationMap')"
                     v-if="navigatorLocation.latitude && navigatorLocation.longitude"
-                    :disabled="!haveInternetConnetion"
-                    class="btn btn-primary">
+                    :disabled="!haveInternetConnetion">
                     {{ navigatorLocation.showOnMap ? 'Hide map' : 'Show on map' }}
-                </button>
+                </b-button>
 
                 <div v-show="navigatorLocation.showOnMap" id="navigatorLocationMap" style="width: 100%; height: 400px; margin-top: 5px;"></div>
             </div>
@@ -41,22 +40,21 @@
             </div>
 
             <div class="card-body">
-                <button @click="getLocationByYandex" :disabled="!haveInternetConnetion" class="btn btn-primary">Show coordinates</button>
+                <b-button variant="primary" @click="getLocationByYandex" :disabled="!haveInternetConnetion">Show coordinates</b-button>
 
                 <p v-if="yandexLocation.latitude && yandexLocation.longitude" class="card-text coordinates">
                     Latitude: {{ yandexLocation.latitude }}<br>
                     Longitude: {{ yandexLocation.longitude }}
                 </p>
 
-                <button
+                <b-button variant="primary" 
                     @click="yandexLocation.showOnMap ?
                         hideMapYandex() :
                         initGoogleMap(yandexLocation, 'yandexLocationMap')"
                     v-if="yandexLocation.latitude && yandexLocation.longitude"
-                    :disabled="!haveInternetConnetion"
-                    class="btn btn-primary">
+                    :disabled="!haveInternetConnetion">
                     {{ yandexLocation.showOnMap ? 'Hide map' : 'Show on map' }}
-                </button>
+                </b-button>
 
                 <div v-show="yandexLocation.showOnMap" id="yandexLocationMap" style="width: 100%; height: 400px; margin-top: 5px;"></div>
             </div>
@@ -73,22 +71,21 @@
             </div>
 
             <div class="card-body">
-                <button @click="getLocationByGoogle()" :disabled="!haveInternetConnetion" class="btn btn-primary">Show coordinates</button>
+                <b-button variant="primary"  @click="getLocationByGoogle()" :disabled="!haveInternetConnetion">Show coordinates</b-button>
 
                 <p v-if="googleLocation.latitude && googleLocation.longitude" class="card-text coordinates">
                     Latitude: {{ googleLocation.latitude }}<br>
                     Longitude: {{ googleLocation.longitude }}
                 </p>
 
-                <button
+                <b-button variant="primary" 
                     @click="googleLocation.showOnMap ?
                         hideMapGoogle() :
                         initGoogleMap(googleLocation, 'googleLocationMap')"
                     v-if="googleLocation.latitude && googleLocation.longitude"
-                    :disabled="!haveInternetConnetion"
-                    class="btn btn-primary">
+                    :disabled="!haveInternetConnetion">
                     {{ googleLocation.showOnMap ? 'Hide map' : 'Show on map' }}
-                </button>
+                </b-button>
 
                 <div v-show="googleLocation.showOnMap" id="googleLocationMap" style="width: 100%; height: 400px; margin-top: 5px;"></div>
             </div>
