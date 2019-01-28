@@ -79,7 +79,7 @@
 <script>
     /* eslint-disable */
     import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
-    
+
     import firebase from 'firebase/app'
     import 'firebase/firestore'
 
@@ -378,6 +378,9 @@
                 }
             },
 
+            /**
+             * Returns incremented id for this.workers collection
+             */
             getNextId () {
                 return this.workers.reduce((acc, cur) => Math.max(acc, cur.id), 0) + 1
             }
