@@ -78,9 +78,10 @@
 
 <script>
     /* eslint-disable */
-    import axios from 'axios'
     import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
-    import firebase from 'firebase'
+    
+    import firebase from 'firebase/app'
+    import 'firebase/firestore'
 
     var config = {
         apiKey: "AIzaSyBYoVZqtnVu2qlS7TzfM7kgY2rO96YZVy0",
@@ -378,13 +379,7 @@
             },
 
             getNextId () {
-                var newId = 0
-                this.workers.forEach((item) => {
-                    if (+item.id >= newId) {
-                        newId = +item.id + 1
-                    }
-                })
-                return newId
+                return this.workers.reduce((acc, cur) => Math.max(acc, cur.id), 0) + 1
             }
         }
     }
