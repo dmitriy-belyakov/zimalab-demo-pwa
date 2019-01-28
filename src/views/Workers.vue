@@ -17,7 +17,7 @@
             
             <b-table v-if="workers" responsive bordered hover :items="workers" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
                 <template slot="delete" slot-scope="row">
-                    <b-button @click.stop="deleteWorker(row.item._id, row.item)" class="btn btn-danger">
+                    <b-button @click.stop="deleteWorker(row.item.id)" class="btn btn-danger">
                         delete
                     </b-button>
                 </template>
@@ -80,6 +80,18 @@
     /* eslint-disable */
     import axios from 'axios'
     import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
+    import firebase from 'firebase'
+
+    var config = {
+        apiKey: "AIzaSyBYoVZqtnVu2qlS7TzfM7kgY2rO96YZVy0",
+        authDomain: "zimalab-workers.firebaseapp.com",
+        databaseURL: "https://zimalab-workers.firebaseio.com",
+        projectId: "zimalab-workers",
+        storageBucket: "zimalab-workers.appspot.com",
+        messagingSenderId: "481715674443"
+    };
+    firebase.initializeApp(config);
+    var db = firebase.firestore();
 
     const workerss = [{
             name: 'John Oliver',
@@ -269,7 +281,7 @@
     export default {
         data: function () {
             return {
-                workers: null,
+                workers: [],
                 fields: [
                     { key: 'id', sortable: true},
                     { key: 'name', sortable: true },
@@ -306,22 +318,14 @@
             ClipLoader,
         },
         mounted () {
-            axios
-                .get('https://' + this.dbUrl + '.restdb.io/rest/workers', {
-                    headers: {
-                        'x-apikey': '5c0913455b925e3d4c9afa30'
-                    }
-                })
-                .then(response => {
-                    this.workers = response.data
-                    this.showLoading = false
-                })
-                .catch(response => {
-                    console.log('err: ' + response)
-                    this.showLoading = false
-                    this.cannotLoadDB = true
-
-                })
+            db.collection("workers").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    // console.log(doc.data());
+                    this.workers.push({id: doc.id, ...doc.data()})
+                });
+                this.showLoading = false
+                console.log(this.getNextId())
+            });
         },
         computed: {
             totalRows: function () {
@@ -330,73 +334,57 @@
         },
         methods: {
             addNewWorker () {
-                axios
-                    .post('https://' + this.dbUrl + '.restdb.io/rest/workers',
-                        this.newWorker,
-                        {
-                            headers: {
-                                'x-apikey': '5c0913455b925e3d4c9afa30'
-                            }
-                        }
-                    )
-                    .then(response => {
-                        console.log(response)
-                        this.workers.push({
-                            name: this.newWorker.name,
-                            office: this.newWorker.office,
-                            position: this.newWorker.position,
-                            age: this.newWorker.age,
-                            salary: this.newWorker.salary
-                        });
-                        this.newWorker.name = ''
-                        this.newWorker.office = ''
-                        this.newWorker.position = ''
-                        this.newWorker.age = ''
-                        this.newWorker.salary = ''
+                const id = this.getNextId().toString()
+                db.collection("workers").doc(id)
+                    .set(this.newWorker)
+                    .then(() => {
+                        console.log('Successfully added new worker')
+                        this.workers.push({id: id, ...this.newWorker})
+                        this.showSuccesAdeddWorkerMessage = true
+                        setTimeout(() => {
+                            this.showSuccesAdeddWorkerMessage = false
+                        }, 5000);
                     })
-                    .catch(response => {
-                        console.log(response)
-                        this.newWorker.name = ''
-                        this.newWorker.office = ''
-                        this.newWorker.position = ''
-                        this.newWorker.age = ''
-                        this.newWorker.salary = ''
-                    })                
+                    .catch((e) => console.log(e))
             },
-            deleteWorker (id, item) {
-                axios
-                    .delete('https://' + this.dbUrl + '.restdb.io/rest/workers/' + id,
-                        {
-                            headers: {
-                                'x-apikey': '5c0913455b925e3d4c9afa30'
-                            }
-                        }
-                    )
-                    .then(response => {
-                        this.deleteWorkerId = null
-                        this.workers.splice(this.workers.indexOf(item), 1)
-                        console.log(response)
+
+            deleteWorker (id) {
+                console.log(id)
+                db.collection("workers").doc(id.toString())
+                    .delete()
+                    .then(() => {
+                        console.log("Document successfully deleted!");
+                        this.workers = this.workers.filter((item) => {
+                            return item.id != id
+                        })
                     })
-                    .catch(response => {
-                        this.deleteWorkerId = null
-                        console.log(response)
-                    })
+                    .catch(function(error) {
+                        console.error("Error removing document: ", error);
+                    });
             },
+
             marginTopFix () {
                 document.getElementsByClassName('modal-dialog')[0].style.marginTop = "100px"
             },
+
             handleOk (event) {
                 event.preventDefault()
                 if (this.newWorker.name && this.newWorker.position && this.newWorker.office && this.newWorker.age && this.newWorker.salary) {
                     this.addNewWorker()
                     this.$refs.modal.hide()
-                    this.showSuccesAdeddWorkerMessage = true
-                    setTimeout(() => {
-                        this.showSuccesAdeddWorkerMessage = false
-                    }, 5000);
                 } else {
                     alert('All fields are required')
                 }
+            },
+
+            getNextId () {
+                var newId = 0
+                this.workers.forEach((item) => {
+                    if (+item.id >= newId) {
+                        newId = +item.id + 1
+                    }
+                })
+                return newId
             }
         }
     }
