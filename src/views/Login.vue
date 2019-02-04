@@ -7,7 +7,7 @@
         <b-input v-model="email" type="text" placeholder="Email"/>
         <b-input v-model="password" type="password" placeholder="Password"/>
 
-        <b-button class="login-button" variant="primary" :disabled="!(email && password)">
+        <b-button @click="login" class="login-button" variant="primary" :disabled="!(email && password)">
             Login
         </b-button>
     </div>
@@ -20,6 +20,16 @@
             return {
                 email: '',
                 password: ''
+            }
+        },
+
+        methods: {
+            login () {
+                console.log('Logging: ' + this.email + '\t\t' + this.password)
+                this.$store.dispatch('userLogin', {
+                    email: this.email,
+                    password: this.password
+                })
             }
         }
     }
