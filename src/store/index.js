@@ -32,11 +32,12 @@ export default new Vuex.Store({
         soundsOn: false,
         darkMode: false,
     },
+    
     mutations: {
         addPurchase (state, payload) {
             state.purchaseHistory.unshift(payload)
         },
-        
+
         clear (state) {
             state.purchaseHistory = []
         },
@@ -57,6 +58,7 @@ export default new Vuex.Store({
             state.isAuthenticated = payload;
         }
     },
+
     actions: {
         userLogin({ commit }, { email, password }) {
             firebase
@@ -90,6 +92,7 @@ export default new Vuex.Store({
                 });
         }
     },
+
     getters: {
         isAuthenticated(state) {
             return state.user !== null && state.user !== undefined;
@@ -103,5 +106,6 @@ export default new Vuex.Store({
             return firebase.firestore()
         }
     },
+
     plugins: [createPersistedState()]
 })
