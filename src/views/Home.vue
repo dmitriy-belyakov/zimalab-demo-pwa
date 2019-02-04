@@ -10,9 +10,10 @@
 
         <div class="link-container">
             <router-link v-for="(link, index) in links" :key="link" :to="link.path">
-                <b-button   v-if="link.name != 'Home'"
+                <b-button   v-if="link.name != 'Home' && link.path != '/login'"
                             variant="outline-primary"
-                            :class="'router-link-button' + ((linksLength == index + 1 && linksLengthEven) ? ' last' : '')"
+                            class="router-link-button"
+                            :class="{'last': index == 9}"
                             size="lg"
                             @click="clickHandler()">
                     {{ link.name }}
