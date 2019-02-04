@@ -10,19 +10,24 @@
     /* eslint-disable */
     export default {
         props: ['autoHideDrawer'],
+        
         data: function () {
             return {
                 links: []
             }
         },
+
         mounted () {
             this.$router.options.routes.forEach(route => {
-                this.links.push({
-                    name: route.name,
-                    path: route.path
-                })
+                if (route.path !== '/login') {
+                    this.links.push({
+                        name: route.name,
+                        path: route.path
+                    })
+                }
             })
         },
+
         methods: {            
             hideDrawer () {
                 this.$parent.playButtonSound()
