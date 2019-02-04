@@ -83,16 +83,16 @@
     import firebase from 'firebase/app'
     import 'firebase/firestore'
 
-    var config = {
-        apiKey: "AIzaSyBYoVZqtnVu2qlS7TzfM7kgY2rO96YZVy0",
-        authDomain: "zimalab-workers.firebaseapp.com",
-        databaseURL: "https://zimalab-workers.firebaseio.com",
-        projectId: "zimalab-workers",
-        storageBucket: "zimalab-workers.appspot.com",
-        messagingSenderId: "481715674443"
-    };
-    firebase.initializeApp(config);
-    var db = firebase.firestore();
+    // var config = {
+    //     apiKey: "AIzaSyBYoVZqtnVu2qlS7TzfM7kgY2rO96YZVy0",
+    //     authDomain: "zimalab-workers.firebaseapp.com",
+    //     databaseURL: "https://zimalab-workers.firebaseio.com",
+    //     projectId: "zimalab-workers",
+    //     storageBucket: "zimalab-workers.appspot.com",
+    //     messagingSenderId: "481715674443"
+    // };
+    // firebase.initializeApp(config);
+    var db = null
 
     const workerss = [{
             name: 'John Oliver',
@@ -319,6 +319,7 @@
             ClipLoader,
         },
         mounted () {
+            db = this.$store.getters.firebaseDB
             db.collection("workers").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     // console.log(doc.data());
