@@ -66,6 +66,11 @@ export default new Router({
       path: '/purchasehistory',
       name: 'Purchase history',
       component: PurchaseHistory
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue')
     }
   ]
 })
