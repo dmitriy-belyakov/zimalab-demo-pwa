@@ -6,10 +6,10 @@ import createPersistedState from 'vuex-persistedstate'
 import router from '@/router';
 
 import firebase from 'firebase/app'
-// import { firestorage } from '@/firebase/firestorage'
 import 'firebase/firestore'
 import 'firebase/auth'
 import 'firebase/storage'
+
 Vue.use(Vuex)
 
 const config = {
@@ -22,8 +22,6 @@ const config = {
 };
 firebase.initializeApp(config)
 
-const storageRef = firebase.storage().ref()
-
 export default new Vuex.Store({
     state: {
         user: null,
@@ -32,7 +30,7 @@ export default new Vuex.Store({
         soundsOn: false,
         darkMode: false,
     },
-    
+
     mutations: {
         addPurchase (state, payload) {
             state.purchaseHistory.unshift(payload)
