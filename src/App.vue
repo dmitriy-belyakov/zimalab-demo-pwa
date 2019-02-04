@@ -13,7 +13,22 @@
     <div class="mdl-layout__drawer toggled">
       <span class="mdl-layout-title">Vue demo</span>
       <nav class="mdl-navigation">
+        
+        <!-- Menu links -->
         <menu-links autoHideDrawer="true"/>
+
+        <!-- Profile in the drawer -->
+        <div v-if="$store.getters.isAuthenticated" class="profile">
+          <p class="logged-as">
+            You logged with <wbr><strong>{{ $store.state.user.user.email }}</strong>
+          </p>
+          <span href="#" class="logout">
+            <b-button variant="outline-primary" size="sm" class="logout-button" @click="$store.dispatch('userSignOut')">
+              Logout
+            </b-button>
+          </span>
+        </div>
+
       </nav>
     </div>
     <main class="mdl-layout__content">
@@ -112,6 +127,17 @@
   @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
   @import url('https://code.getmdl.io/1.2.1/material.blue-red.min.css');
   @import url('assets/dark-theme.css');
+
+  .profile {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+  }
+
+  .logout-button {
+    width: 100%;
+  }
 
   body {
     margin: 0;
