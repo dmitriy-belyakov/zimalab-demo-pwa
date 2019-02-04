@@ -10,67 +10,117 @@ import Purchase from '@/views/Purchase'
 import Cropper from '@/views/Cropper'
 import Home from '@/views/Home'
 import PurchaseHistory from '@/views/PurchaseHistory'
+import store from '@/store/index.js'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   // notice that history mode isn't supported when building for apache cordova (use hash mode instead)
   mode: 'history',
   routes: [
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
+      meta: {
+        authRequired: true
+      }
     },
     {
       path: '/qr',
       name: 'QR Code',
-      component: QRCodeScanner
+      component: QRCodeScanner,
+      meta: {
+        authRequired: true
+      }
     },
     {
       path: '/signature',
       name: 'Signature',
-      component: Signature
+      component: Signature,
+      meta: {
+        authRequired: true
+      }
     },
     {
       path: '/geotag',
       name: 'Geotag',
-      component: Geotag
+      component: Geotag,
+      meta: {
+        authRequired: true
+      }
     },
     {
       path: '/imageupload',
       name: 'Image upload',
-      component: ImageUpload
+      component: ImageUpload,
+      meta: {
+        authRequired: true
+      }
     },
     {
       path: '/imagecrop',
       name: 'Image crop',
-      component: Cropper
+      component: Cropper,
+      meta: {
+        authRequired: true
+      }
     },
     {
       path: '/offlineexample',
       name: 'Offline mode',
-      component: OfflineExample
+      component: OfflineExample,
+      meta: {
+        authRequired: true
+      }
     },
     {
       path: '/workers',
       name: 'Workers',
-      component: Workers
+      component: Workers,
+      meta: {
+        authRequired: true
+      }
     },
     {
       path: '/purchaseaduck',
       name: 'Purchase a duck',
-      component: Purchase
+      component: Purchase,
+      meta: {
+        authRequired: true
+      }
     },
     {
       path: '/purchasehistory',
       name: 'Purchase history',
-      component: PurchaseHistory
+      component: PurchaseHistory,
+      meta: {
+        authRequired: true
+      }
     },
     {
       path: '/login',
       name: 'Login',
-      component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue')
+      component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
+      meta: {
+        authRequired: false
+      }
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.authRequired)) {
+    if (!store.state.isAuthenticated) {
+      next({
+        path: '/login'
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
+export default router
