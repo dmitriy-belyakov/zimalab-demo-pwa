@@ -29,6 +29,7 @@ export default new Vuex.Store({
         purchaseHistory: [],
         soundsOn: false,
         darkMode: false,
+        loginError: ''
     },
 
     mutations: {
@@ -49,11 +50,19 @@ export default new Vuex.Store({
         },
 
         setUser (state, payload) {
-            state.user = payload;
+            state.user = payload
         },
 
         setIsAuthenticated (state, payload) {
-            state.isAuthenticated = payload;
+            state.isAuthenticated = payload
+        },
+
+        setLoginError (state, payload) {
+            state.loginError = payload
+        },
+
+        removeLoginError (state) {
+            state.loginError = ''
         }
     },
 
@@ -71,6 +80,8 @@ export default new Vuex.Store({
                     commit('setUser', null);
                     commit('setIsAuthenticated', false);
                     // router.push('/');
+                    // alert('Incorrect login or password')
+                    commit('setLoginError', 'Wrong email or password')
                 });
         },
 
@@ -102,6 +113,10 @@ export default new Vuex.Store({
 
         firebaseDB (state) {
             return firebase.firestore()
+        },
+
+        getLoginError (state) {
+            return state.loginError
         }
     },
 

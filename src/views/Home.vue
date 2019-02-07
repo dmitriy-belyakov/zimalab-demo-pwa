@@ -25,7 +25,7 @@
             <br>In this application we've used next modules: vue, vue-loader, vue-router, vuex, axios, vue-signature, vue-qrcode-reader, v-offline,
             vue-spinner, vue-step-progress, vue-country-region-select, vue-bootstrap-datetimepicker, vue-the-mask,
             vue-gallery-slideshow, vue-draggable, vue-touch and vue-cropperjs.
-            <br/>Workers page uses firebase to store it's data.
+            <br/>Workers and login page's uses firebase to store it's data.
         </p>
     </div>
 </template>
@@ -76,6 +76,7 @@
     
     .link-container button {
         width: 45%;
+        /* word-wrap: break-word; */
     }
 
     .link-container button.last {

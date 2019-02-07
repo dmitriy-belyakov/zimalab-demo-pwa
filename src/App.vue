@@ -10,33 +10,34 @@
         </div>
       </div>
     </header>
+    
     <div class="mdl-layout__drawer toggled">
       <span class="mdl-layout-title">Vue demo</span>
-      <nav class="mdl-navigation">
+      <nav class="mdl-navigation nav">
         
         <!-- Menu links -->
-        <menu-links autoHideDrawer="true"/>
-
-        <!-- Profile in the drawer -->
-        <div v-if="$store.getters.isAuthenticated" class="profile">
-          <p class="logged-as">
-            You logged with <wbr><strong>{{ $store.state.user.user.email }}</strong>
-          </p>
-          <span href="#" class="logout">
-            <b-button variant="outline-primary" size="sm" class="logout-button" @click="$store.dispatch('userSignOut')">
-              Logout
-            </b-button>
-          </span>
-        </div>
-
+        <menu-links autoHideDrawer="true" class="menu-links"/>
       </nav>
+
+      <!-- Profile in the drawer $store.getters.isAuthenticated-->
+      <div v-if="$store.getters.isAuthenticated" class="profile">
+        <p class="logged-as">
+          You logged with <wbr><strong>{{ $store.state.user.user.email }}</strong>
+        </p>
+        <span href="#" class="logout">
+          <b-button variant="outline-primary" size="sm" class="logout-button" @click="logoutHandler">
+            Logout
+          </b-button>
+        </span>
+      </div>
     </div>
+
     <main class="mdl-layout__content">
       <div class="page-content">
         <offline @detected-condition="handleConnectivityChange"></offline>
 
         <div v-show="!haveInternetConnetion" class="alert alert-warning offline" role="alert" style="margin-top: 10px;">
-            You are in offline mode
+          You are in offline mode
         </div>
 
         <router-view></router-view>
@@ -82,12 +83,35 @@
       },
       darkMode () {
         return this.$store.state.darkMode
+      },
+      showMenuIcon () {
+        return this.$route.path !== '/login'
+      }
+    },
+    watch: {
+      showMenuIcon: function(val) {
+        if (document.getElementsByClassName('mdl-layout__drawer-button')[0]) {
+          document.getElementsByClassName('mdl-layout__drawer-button')[0].style.display = val ? 'block' : 'none'
+        }
       }
     },
     mounted () {
       Vue.config.silent = true 
       this.audio = new Audio(this.buttonSoundSrc)
       this.audio.load()
+      // console.log()
+      // setTimeout(() => {
+      //   if (!this.showMenuIcon) {
+      //     console.log('hello ' + this.$route.path)
+      //     setTimeout(() => {
+      //       document.getElementsByClassName('mdl-layout__drawer-button')[0].style.display = 'none'
+      //     }, 200);
+      //   }
+
+      //   console.log(this.$route.path)
+      // }, 300);
+      // if (this.$route.path === '/login')
+      //   document.getElementsByClassName('mdl-layout__drawer-button')[0].style.display = 'none'
     },
     methods: {
       hideMenu: function () {
@@ -118,6 +142,11 @@
       },
       pageRefresh () {
         location.reload()
+      },
+      logoutHandler () {
+        this.hideMenu()
+        this.playButtonSound()
+        this.$store.dispatch('userSignOut')
       }
     }
   }
@@ -127,12 +156,17 @@
   @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
   @import url('https://code.getmdl.io/1.2.1/material.blue-red.min.css');
   @import url('assets/dark-theme.css');
+  
+  .menu-links {
+    min-height: calc(100vh - 192px);
+  }
 
   .profile {
-    position: fixed;
+    padding: 10px;
+    position: sticky;
     bottom: 0;
     left: 0;
-    padding: 10px;
+    background-color: inherit !important;
   }
 
   .logout-button {
