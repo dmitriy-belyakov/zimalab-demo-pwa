@@ -25,7 +25,7 @@
             
             <b-row>
                 <b-col md="8">
-                    <b-pagination size="md" :total-rows="rowsCount" v-model="currentPage" :per-page="perPage"></b-pagination>
+                    <b-pagination v-show="rowsCount / perPage > 1" size="md" :total-rows="rowsCount" v-model="currentPage" :per-page="perPage"></b-pagination>
                 </b-col>
                 <b-col md="4">
                     <p>Total amount of workers: {{rowsCount}}</p>
