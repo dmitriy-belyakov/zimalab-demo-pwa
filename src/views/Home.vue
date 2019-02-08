@@ -25,7 +25,7 @@
             <br>In this application we've used next modules: vue, vue-loader, vue-router, vuex, axios, vue-signature, vue-qrcode-reader, v-offline,
             vue-spinner, vue-step-progress, vue-country-region-select, vue-bootstrap-datetimepicker, vue-the-mask,
             vue-gallery-slideshow, vue-draggable, vue-touch and vue-cropperjs.
-            <br/>Workers and login page's uses firebase to store it's data.
+            <br/>Workers page's uses firebase to store it's data. Authorization also made by firebase.
         </p>
     </div>
 </template>
@@ -40,10 +40,12 @@
         },
         mounted () {
             this.$router.options.routes.forEach(route => {
-                this.links.push({
-                    name: route.name,
-                    path: route.path
-                })
+                if (route.path !== '/signup') {
+                    this.links.push({
+                        name: route.name,
+                        path: route.path
+                    })
+                }
             })
         },
         computed: {
