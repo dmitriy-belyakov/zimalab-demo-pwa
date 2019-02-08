@@ -29,7 +29,8 @@ export default new Vuex.Store({
         purchaseHistory: [],
         soundsOn: false,
         darkMode: false,
-        loginError: ''
+        loginError: '',
+        signUpError: ''
     },
 
     mutations: {
@@ -63,6 +64,14 @@ export default new Vuex.Store({
 
         removeLoginError (state) {
             state.loginError = ''
+        },
+
+        setSignupError (state, payload) {
+            state.signUpError = payload
+        },
+
+        removeSignupError (state) {
+            state.signUpError = ''
         }
     },
 
@@ -98,6 +107,24 @@ export default new Vuex.Store({
                     commit('setUser', null);
                     commit('setIsAuthenticated', false);
                     // router.push('/');
+                });
+        },
+
+        userJoin({ commit }, { email, password }) {
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(email, password)
+                .then(user => {
+                    commit('setUser', user);
+                    commit('setIsAuthenticated', true);
+                    router.push('/');
+                    commit('removeSignupError')
+                })
+                .catch(() => {
+                    commit('setUser', null);
+                    commit('setIsAuthenticated', false);
+                    // alert('ny blya')
+                    commit('setSignupError', 'Something went wrong')
                 });
         }
     },
