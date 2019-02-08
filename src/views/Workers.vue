@@ -197,7 +197,29 @@
                     this.newWorkerError = ''
                 } else {
                     // alert('All fields are required')
-                    this.newWorkerError = 'All fields are required'
+                    this.newWorkerError = 'You must fill this fields: '
+                    
+                    if (!this.newWorker.name) {
+                        this.newWorkerError += 'Name, '
+                    }
+
+                    if (!this.newWorker.position) {
+                        this.newWorkerError += 'Position, '
+                    }
+
+                    if (!this.newWorker.office) {
+                        this.newWorkerError += 'Office, '
+                    }
+
+                    if (!this.newWorker.age) {
+                        this.newWorkerError += 'Age, '
+                    }
+
+                    if (!this.newWorker.salary) {
+                        this.newWorkerError += 'Salary, '
+                    }
+
+                    this.newWorkerError = this.newWorkerError.slice(0, -2)
                 }
             },
 
