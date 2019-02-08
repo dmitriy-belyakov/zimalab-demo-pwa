@@ -15,6 +15,8 @@
             Use our demo account:<br/>
             <strong>Email: </strong>demo@demo.demo<br/>
             <strong>Password: </strong>123456<br/>
+
+            <br/> Or you can sign up <router-link to="/signup">here</router-link>.<br/>
         </p>
     </div>
 </template>
