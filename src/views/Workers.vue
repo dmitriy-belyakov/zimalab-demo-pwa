@@ -294,6 +294,7 @@
                     { key: 'age', sortable: true },
                     // { key: 'start_date', sortable: true },
                     { key: 'salary', sortable: true },
+                    { key: 'addedBy', sortable: true },
                     { key: 'delete', sortable: false }
                 ],
                 pageOptions: [ 5, 10, 15 ],
@@ -334,6 +335,8 @@
                 console.log(this.getNextId())
                 this.rowsCount = this.workers.length
             });
+
+            console.log(this.$store.getters.getUser)
         },
         computed: {
             totalRows: function () {
@@ -347,7 +350,7 @@
                     .set(this.newWorker)
                     .then(() => {
                         console.log('Successfully added new worker')
-                        this.workers.push({id: id, ...this.newWorker})
+                        this.workers.push({id: id, addedBy: this.$store.getters.getUser.user.email, ...this.newWorker})
                         this.showSuccesAdeddWorkerMessage = true
                         setTimeout(() => {
                             this.showSuccesAdeddWorkerMessage = false
