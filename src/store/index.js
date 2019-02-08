@@ -144,6 +144,10 @@ export default new Vuex.Store({
 
         getLoginError (state) {
             return state.loginError
+        },
+
+        getSignError (state) {
+            return state.signUpError
         }
     },
 
