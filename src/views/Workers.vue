@@ -15,7 +15,7 @@
                 </b-col>
             </b-row><br>
             
-            <b-table v-if="workers" responsive bordered hover :items="workers" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
+            <b-table v-if="workers" responsive bordered hover :items="workers" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter" @filtered="onFiltered">
                 <template slot="delete" slot-scope="row">
                     <b-button @click.stop="deleteWorker(row.item.id)" class="btn btn-danger">
                         delete
@@ -25,10 +25,10 @@
             
             <b-row>
                 <b-col md="8">
-                    <b-pagination size="md" :total-rows="totalRows" v-model="currentPage" :per-page="perPage"></b-pagination>
+                    <b-pagination size="md" :total-rows="rowsCount" v-model="currentPage" :per-page="perPage"></b-pagination>
                 </b-col>
                 <b-col md="4">
-                    <p>Total amount of workers: {{totalRows}}</p>
+                    <p>Total amount of workers: {{rowsCount}}</p>
                 </b-col>
             </b-row>
             
@@ -37,6 +37,9 @@
             </b-button>
 
             <b-modal id="modalAddWorker" @shown="marginTopFix" @ok="handleOk" ref="modal" title="Add worker">
+                <div v-if="newWorkerError" class="alert alert-danger" role="alert">
+                    {{ newWorkerError }}
+                </div>
                 <b-form @submit.stop.prevent="addNewWorker">
                     <div class="form-container">
                         <b-form-group>
@@ -312,7 +315,9 @@
                 showDeleteWorkerForm: false,
                 showLoading: true,
                 cannotLoadDB: false,
-                showSuccesAdeddWorkerMessage: false
+                showSuccesAdeddWorkerMessage: false,
+                newWorkerError: '',
+                rowsCount: 0,
             }
         },
         components: {
@@ -327,6 +332,7 @@
                 });
                 this.showLoading = false
                 console.log(this.getNextId())
+                this.rowsCount = this.workers.length
             });
         },
         computed: {
@@ -367,6 +373,7 @@
 
             marginTopFix () {
                 document.getElementsByClassName('modal-dialog')[0].style.marginTop = "100px"
+                this.newWorkerError = ''
             },
 
             handleOk (event) {
@@ -374,8 +381,10 @@
                 if (this.newWorker.name && this.newWorker.position && this.newWorker.office && this.newWorker.age && this.newWorker.salary) {
                     this.addNewWorker()
                     this.$refs.modal.hide()
+                    this.newWorkerError = ''
                 } else {
-                    alert('All fields are required')
+                    // alert('All fields are required')
+                    this.newWorkerError = 'All fields are required'
                 }
             },
 
@@ -384,6 +393,12 @@
              */
             getNextId () {
                 return this.workers.reduce((acc, cur) => Math.max(acc, cur.id), 0) + 1
+            },
+
+            onFiltered (filteredItems) {
+                // Trigger pagination to update the number of buttons/pages due to filtering
+                this.rowsCount = filteredItems.length
+                this.currentPage = 1
             }
         }
     }
