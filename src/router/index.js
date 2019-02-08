@@ -125,6 +125,13 @@ router.beforeEach((to, from, next) => {
       })
     } else {
       next()
+
+      var intId = setInterval(() => {
+        if (document.getElementsByClassName('mdl-layout__drawer-button')[0]) {
+          document.getElementsByClassName('mdl-layout__drawer-button')[0].style.display = 'block'
+          clearInterval(intId)
+        }
+      }, 10)
     }
   } else {
     next()
