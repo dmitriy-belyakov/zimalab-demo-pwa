@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <div v-if="$store.getters.getLoginError" class="alert alert-danger" role="alert">
-            {{ $store.getters.getLoginError }}
+        <div v-if="$store.getters.getSignupError" class="alert alert-danger" role="alert">
+            {{ $store.getters.getSignupError }}
         </div>
 
         <b-input v-model="email" type="text" placeholder="Email"/>
@@ -11,9 +11,9 @@
             Sign up
         </b-button>
 
-        <!-- <p class="description">
-            You can use any email
-        </p> -->
+        <p class="description">
+            Allready have an account? <router-link to="/login">Login here</router-link>.<br/>
+        </p>
     </div>
 </template>
 
