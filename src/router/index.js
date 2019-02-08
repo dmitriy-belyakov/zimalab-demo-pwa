@@ -105,6 +105,14 @@ const router = new Router({
       meta: {
         authRequired: false
       }
+    },
+    {
+      path: '/signup',
+      name: 'Sign up',
+      component: () => import(/* webpackChunkName: "login" */ '@/views/Signup.vue'),
+      meta: {
+        authRequired: false
+      }
     }
   ]
 })
