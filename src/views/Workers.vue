@@ -156,6 +156,7 @@
         methods: {
             addNewWorker () {
                 const id = this.getNextId().toString()
+                this.newWorker.addedBy = this.$store.getters.getUser.user.email
                 db.collection("workers").doc(id)
                     .set(this.newWorker)
                     .then(() => {
