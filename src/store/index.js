@@ -120,11 +120,12 @@ export default new Vuex.Store({
                     router.push('/');
                     commit('removeSignupError')
                 })
-                .catch(() => {
+                .catch((e) => {
                     commit('setUser', null);
                     commit('setIsAuthenticated', false);
                     // alert('ny blya')
-                    commit('setSignupError', 'Something went wrong')
+                    commit('setSignupError', e.message)
+                    console.log(e)
                 });
         }
     },
@@ -146,7 +147,7 @@ export default new Vuex.Store({
             return state.loginError
         },
 
-        getSignError (state) {
+        getSignupError (state) {
             return state.signUpError
         }
     },
