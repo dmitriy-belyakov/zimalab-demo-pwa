@@ -1,17 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import QRCodeScanner from '@/views/QRCodeScanner'
-import Signature from '@/views/Signature'
-import Geotag from '@/views/Geotag'
-import ImageUpload from '@/views/ImageUpload'
-import OfflineExample from '@/views/OfflineExample'
-import Workers from '@/views/Workers'
-import Purchase from '@/views/Purchase'
-import Cropper from '@/views/Cropper'
-import Home from '@/views/Home'
-import PurchaseHistory from '@/views/PurchaseHistory'
+// import QRCodeScanner from '@/views/QRCodeScanner'
+// import Signature from '@/views/Signature'
+// import Geotag from '@/views/Geotag'
+// import ImageUpload from '@/views/ImageUpload'
+// import OfflineExample from '@/views/OfflineExample'
+// import Workers from '@/views/Workers'
+// import Purchase from '@/views/Purchase'
+// import Cropper from '@/views/Cropper'
+// import Home from '@/views/Home'
+// import PurchaseHistory from '@/views/PurchaseHistory'
 import store from '@/store/index.js'
-
 Vue.use(Router)
 
 const router = new Router({
@@ -21,7 +20,7 @@ const router = new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home,
+      component: () => import('@/views/Home.vue'),
       meta: {
         authRequired: true
       }
@@ -29,7 +28,7 @@ const router = new Router({
     {
       path: '/qr',
       name: 'QR Code',
-      component: QRCodeScanner,
+      component: () => import('@/views/QRCodeScanner.vue'),
       meta: {
         authRequired: true
       }
@@ -37,7 +36,7 @@ const router = new Router({
     {
       path: '/signature',
       name: 'Signature',
-      component: Signature,
+      component: () => import('@/views/Signature.vue'),
       meta: {
         authRequired: true
       }
@@ -45,7 +44,7 @@ const router = new Router({
     {
       path: '/geotag',
       name: 'Geotag',
-      component: Geotag,
+      component: () => import('@/views/Geotag.vue'),
       meta: {
         authRequired: true
       }
@@ -53,7 +52,7 @@ const router = new Router({
     {
       path: '/imageupload',
       name: 'Image upload',
-      component: ImageUpload,
+      component: () => import('@/views/ImageUpload.vue'),
       meta: {
         authRequired: true
       }
@@ -61,7 +60,7 @@ const router = new Router({
     {
       path: '/imagecrop',
       name: 'Image crop',
-      component: Cropper,
+      component: () => import('@/views/Cropper.vue'),
       meta: {
         authRequired: true
       }
@@ -69,7 +68,7 @@ const router = new Router({
     {
       path: '/offlineexample',
       name: 'Offline mode',
-      component: OfflineExample,
+      component: () => import('@/views/OfflineExample.vue'),
       meta: {
         authRequired: true
       }
@@ -77,7 +76,7 @@ const router = new Router({
     {
       path: '/workers',
       name: 'Workers',
-      component: Workers,
+      component: () => import('@/views/Workers.vue'),
       meta: {
         authRequired: true
       }
@@ -85,7 +84,7 @@ const router = new Router({
     {
       path: '/purchaseaduck',
       name: 'Purchase a duck',
-      component: Purchase,
+      component: () => import('@/views/Purchase.vue'),
       meta: {
         authRequired: true
       }
@@ -93,7 +92,7 @@ const router = new Router({
     {
       path: '/purchasehistory',
       name: 'Purchase history',
-      component: PurchaseHistory,
+      component: () => import('@/views/PurchaseHistory.vue'),
       meta: {
         authRequired: true
       }
@@ -101,7 +100,7 @@ const router = new Router({
     {
       path: '/login',
       name: 'Login',
-      component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
+      component: () => import('@/views/Login.vue'),
       meta: {
         authRequired: false
       }
@@ -109,7 +108,7 @@ const router = new Router({
     {
       path: '/signup',
       name: 'Sign up',
-      component: () => import(/* webpackChunkName: "login" */ '@/views/Signup.vue'),
+      component: () => import('@/views/Signup.vue'),
       meta: {
         authRequired: false
       }
