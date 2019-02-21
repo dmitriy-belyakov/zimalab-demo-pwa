@@ -2,7 +2,7 @@
   "name": "qr-scanner",
   "version": "1.0.0",
   "description": "scanner qr code",
-  "author": "Igor <exanimatesi@yandex.ru>",
+  "author": "Dmitriy <piemekanika@hotmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
